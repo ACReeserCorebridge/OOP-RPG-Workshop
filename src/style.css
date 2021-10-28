@@ -1,0 +1,101 @@
+h1,
+p {
+  font-family: Lato;
+}
+
+body {
+  background: #333;
+  color: lightgreen;
+}
+.ascii {
+  font-family: monospace;
+  white-space: pre;
+}
+.dragon {
+  width: 49%;
+  display: inline-block;
+}
+.hp {
+  color: red;
+}
+.game {
+  display: flex;
+}
+.left {
+  display: inline-block;
+  width: 49%;
+}
+table.grid {
+  font-family: monospace;
+  font-size: 1em;
+  margin: auto;
+}
+.grid td {
+  border-collapse: collapse;
+  text-align: center;
+  width: 3em;
+  height: 3em;
+  margin: 0;
+  padding: 0;
+  border: 1px solid darkgreen;
+}
+.block {
+  display: block;
+}
+.grid.wide {
+  width: 100%;
+}
+.gameover {
+  position: absolute;
+  top: 20%;
+  background-color: rgb(100, 0, 0);
+  color: red;
+  font-weight: bold;
+  border: 1px solid red;
+  width: 200px;
+  padding: 8px;
+  font-size: 32px;
+  text-align: center;
+  left: calc(50% - 100px);
+}
+.winner {
+  position: absolute;
+  top: 20%;
+  background-color: rgb(0, 100, 0);
+  color: lightgreen;
+  font-weight: bold;
+  border: 1px solid lightgreen;
+  width: 200px;
+  padding: 8px;
+  font-size: 32px;
+  text-align: center;
+  left: calc(50% - 100px);
+}
+button{
+  color: white;
+  font-weight: bold;
+  padding: 8px;
+  background-color: green;
+  font-family: monospace;
+  border: 1px solid lightgreen;
+}
+button.smaller{
+  padding: 4px;
+}
+button:disabled{
+  background: grey;
+  color: black;
+}
+button:not(:disabled):hover{
+  background-color: lightgreen;
+  color: black;
+}
+td.loot-chest{
+  height: 9em;
+}
+.red{
+  color: red;
+}
+.yellow{
+  color: yellow;
+}
