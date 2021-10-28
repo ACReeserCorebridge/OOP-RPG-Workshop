@@ -37,3 +37,12 @@ Create one or more item classes and assign instances to the function `GetItemsIn
 The test is complete when your useful weapon, item, and character classes result in a combat VICTORY against the dastardly **_BOSS DRAGON_**.
 
 Create a branch and a Pull Request to submit your code, and take a screenshot or video of your VICTORY test run.
+
+> **All submissions should be original code written by you; no copy-paste, please.**
+
+## BONUS CHALLENGE
+
+Show us the PRETTIEST UI and win a cash prize! Submit a secondary PR with gorgeous graphics or UX and you may win a $35 gift card! 
+
+1. Again, your code and graphics should be 100% original
+1. This UI PR may change any code in the repo in service of beauty
