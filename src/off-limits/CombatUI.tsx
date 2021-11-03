@@ -44,6 +44,16 @@ export const CombatUI: React.FC<{
                 ) : null}
             </div>
             <LogUI log={props.state.log}></LogUI>
+            <br /><br />
+            {props.state.dragonHP > 0 ? (
+                <div>
+                    <iframe src="https://www.youtube.com/embed/syeudRZuuMo?autoplay=1"></iframe>
+                </div>
+            ) : (
+                <div>
+                    <iframe src="https://www.youtube.com/embed/ZMovw9o9YCk?autoplay=1"></iframe>
+                </div>
+            )}
         </div>
     );
 };
