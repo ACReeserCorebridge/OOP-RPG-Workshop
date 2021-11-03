@@ -1,19 +1,20 @@
 import { CharacterClassName, ICharacter, ICharacterActionDecision } from "../off-limits/ICharacter";
-import { IWeapon, IItem } from "../off-limits/IWeapons";
+import { IWeapon, IItem, isMeleeWeapon } from "../off-limits/IWeapons";
 
 //todo: use this base class somehow in Characters.tsx
-export class Character implements ICharacter {
+export class BaseCharacter implements ICharacter {
     name: string = '';
     health: number = 5;
     position: number = 10;
     weapons: IWeapon[] = [];
     item?: IItem;
-    
+    feet = new Feet(this);
+
     classname(): CharacterClassName {
         throw new Error("Method not implemented.");
     }
     move(){
-        throw new Error("Method not implemented.");
+        this.feet.move();
     }
     chooseAction(): ICharacterActionDecision{
         throw new Error("Method not implemented.");
@@ -21,4 +22,14 @@ export class Character implements ICharacter {
     getASCIIStatus(): string {
         throw new Error("Method not implemented.");
     }
+}
+
+//todo: something about this class is code smell...
+export class Feet {
+  constructor(private character: ICharacter) { }
+  move() {
+    if (this.character.weapons.some(x => isMeleeWeapon(x))) {
+      this.character.position = Math.max(this.character.position - 5, 1);
+    }
+  }
 }
