@@ -7,6 +7,7 @@ export class Character implements ICharacter {
     position: number = 10;
     weapons: IWeapon[] = [];
     item?: IItem;
+    imgUrl: string = '';
 
     classname(): CharacterClassName {
         throw new Error("Method not implemented.");
@@ -43,6 +44,6 @@ export class Character implements ICharacter {
     getASCIIStatus(): string {
         if (this.health == 0)
             return "X";
-        return `${this.name} the ${this.classname()}`;
+        return `${this.imgUrl}`;
     }
 }

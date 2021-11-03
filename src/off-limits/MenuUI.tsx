@@ -16,7 +16,7 @@ export const MenuUI: React.FC<{
             <table className="grid wide">
                 <tbody>
                     <tr>
-                        <td colSpan={3}>
+                        <td colSpan={4}>
                             <h1 className="ascii">
                                 OOP RPG
                             </h1>
@@ -27,20 +27,24 @@ export const MenuUI: React.FC<{
                         </td>
                     </tr>
                     <tr>
-                        <td colSpan={3}>
+                        <td colSpan={4}>
                             Once upon a time, four heroes banded together to defeat BOSS
                             DRAGON. They were:
                         </td>
                     </tr>
-                    {props.state.characters.map((x, i) => (
-                        <tr key={i}>
-                            <td>{x.name}</td>
-                            <td>the</td>
-                            <td>{x.classname()}</td>
-                        </tr>
-                    ))}
                     <tr>
-                        <td colSpan={3}>
+                    {props.state.characters.map((x, i) => (
+                        <td key={i}>
+                            <br />
+                            <img src={x.imgUrl} className="avatarImage"></img>
+                            <br /><br />
+                            <span className="bolder">{x.name} the {x.classname()}</span>
+                            <br /><br />
+                        </td>
+                    ))}
+                    </tr>
+                    <tr>
+                        <td colSpan={4}>
                             <button onClick={() => props.start()}>BEGIN GAME</button>
                         </td>
                     </tr>

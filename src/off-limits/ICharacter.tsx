@@ -14,6 +14,7 @@ export interface ICharacter {
     health: number;
     position: number;
     weapons: IWeapon[];
+    imgUrl: string;
     item?: IItem;
     classname(): CharacterClassName;
     move(): void;

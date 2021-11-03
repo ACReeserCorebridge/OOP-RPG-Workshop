@@ -85,9 +85,9 @@ export const CharacterCombatUI: React.FC<{
     return (
         <span className={isDead? 'red': ''}>
             <span className="block">
-                {props.character.getASCIIStatus()}
-                </span>
-            <span className={"block "+hpClass}>[{props.character?.health}]</span>
+                <img src={props.character.getASCIIStatus()} className="avatarImage"></img>
+            </span><br />
+            <span className={"block bolder "+hpClass}>[{props.character?.health}]</span>
         </span>
     );
 };

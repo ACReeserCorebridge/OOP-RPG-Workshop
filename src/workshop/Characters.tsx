@@ -12,6 +12,7 @@ export class Warrior extends Character {
   position: number = 10;
   weapons: IWeapon[] = [];
   item?: IItem;
+  imgUrl = "/images/conan.png";
   classname(): CharacterClassName {
     return 'Warrior';
   }
@@ -26,6 +27,7 @@ export class Cleric extends Character {
   position: number = 10;
   weapons: IWeapon[] = [];
   item?: IItem;
+  imgUrl = "/images/cuthbert.png";
   classname(): CharacterClassName {
     return 'Cleric';
   }
@@ -40,6 +42,7 @@ export class Mage extends Character {
   position: number = 10;
   weapons: IWeapon[] = [];
   item?: IItem;
+  imgUrl = "/images/merlin.png";
   classname(): CharacterClassName {
     return 'Mage';
   }
@@ -54,6 +57,7 @@ export class Thief extends Character {
   position: number = 10;
   weapons: IWeapon[] = [];
   item?: IItem;
+  imgUrl = "/images/bilbo.png";
   classname(): CharacterClassName {
     return 'Thief';
   }
