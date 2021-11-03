@@ -40,10 +40,12 @@ export function GameTick(state: AppState): Pick<AppState, keyof AppState> | unde
           verb = 'stays put';
         }
       }
+      const newLog = activeChar.name + ' ' + verb;
+      console.log(newLog);
       return {
         characters: state.characters,
         currentCombatPhase: CombatPhase.attack,
-        log: [activeChar.name + ' ' + verb, state.log[0], state.log[1], state.log[2]],
+        log: [newLog, state.log[0], state.log[1], state.log[2]],
         dragonHP: state.dragonHP,
         currentCharacter: state.currentCharacter,
         view: state.view,
@@ -52,7 +54,7 @@ export function GameTick(state: AppState): Pick<AppState, keyof AppState> | unde
       };
     }
     case CombatPhase.attack: {
-      let verb = `${activeChar.name} bleeds`;
+      let newLog = `${activeChar.name} bleeds`;
       let dragonDamage: number | undefined = undefined;
       if (activeChar.health > 0) {
         const act = getCharacterAction(activeChar);
@@ -62,10 +64,11 @@ export function GameTick(state: AppState): Pick<AppState, keyof AppState> | unde
         if (partyHeal != null){
           state.characters.forEach(x => x.health += partyHeal);
         }
-        verb = act.log;
+        newLog = act.log;
       }
+      console.log(newLog);
       return {
-        log: [verb,state.log[0], state.log[1], state.log[2]],
+        log: [newLog,state.log[0], state.log[1], state.log[2]],
         currentCombatPhase: CombatPhase.dragon,
         dragonHP: state.dragonHP - (dragonDamage ?? 0),
         currentCharacter: state.currentCharacter,
@@ -83,8 +86,10 @@ export function GameTick(state: AppState): Pick<AppState, keyof AppState> | unde
       if (state.dragonHP <= 0){
         const winners = state.characters.filter(x => x.health > 0).map(y => y.name);
         const winnerNoun = winners.length < 1 ? 'Nobody' : winners.join(',');
+        const newLog = `${winnerNoun} rejoice${winners.length <= 1 ? 's' : ''}!`;
+        console.log(newLog);
         return {
-          log: [`${winnerNoun} rejoice${winners.length <= 1 ? 's' : ''}!`, state.log[0], state.log[1], state.log[2]],
+          log: [newLog, state.log[0], state.log[1], state.log[2]],
           currentCombatPhase: CombatPhase.dragon,
           currentCharacter: nextCharI,
           view: state.view,
@@ -93,25 +98,28 @@ export function GameTick(state: AppState): Pick<AppState, keyof AppState> | unde
           chests: state.chests,
           lootStep: state.lootStep
         }
+      } else {
+        let verb = 'gloats over ' + activeChar.name;
+        if (activeChar.health > 0) {
+          activeChar.health = Math.max(0, activeChar.health - 2);
+          verb =
+            activeChar.health > 0
+              ? 'attacks ' + activeChar.name + ' for 2 dmg'
+              : 'kills ' + activeChar.name;
+        }
+        const newLog = 'Dragon ' + verb;
+        console.log(newLog);
+        return {
+          log: [newLog, state.log[0], state.log[1], state.log[2]],
+          currentCombatPhase: CombatPhase.move,
+          currentCharacter: nextCharI,
+          view: state.view,
+          characters: state.characters,
+          dragonHP: state.dragonHP,
+          chests: state.chests,
+          lootStep: state.lootStep
+        };
       }
-      let verb = 'gloats over ' + activeChar.name;
-      if (activeChar.health > 0) {
-        activeChar.health = Math.max(0, activeChar.health - 2);
-        verb =
-          activeChar.health > 0
-            ? 'attacks ' + activeChar.name + ' for 2 dmg'
-            : 'kills ' + activeChar.name;
-      }
-      return {
-        log: ['Dragon ' + verb, state.log[0], state.log[1], state.log[2]],
-        currentCombatPhase: CombatPhase.move,
-        currentCharacter: nextCharI,
-        view: state.view,
-        characters: state.characters,
-        dragonHP: state.dragonHP,
-        chests: state.chests,
-        lootStep: state.lootStep
-      };
     }
   }
 }
