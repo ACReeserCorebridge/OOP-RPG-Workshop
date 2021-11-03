@@ -38,7 +38,7 @@ export function isRangedWeapon(obj: any): obj is IRangedWeapon<IWeapon> {
 }
 
 export function isConsumable(obj: any): obj is IConsumableItem {
-    return obj.consume !== undefined;
+    return obj.healthBonus !== undefined;
 }
 
 export function isEnchantedItem(obj: any): obj is IEnchantedItem {
