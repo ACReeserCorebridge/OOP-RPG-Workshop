@@ -30,7 +30,7 @@ export class Character implements ICharacter {
           }
     }
     getASCIIStatus(): string {
-        if (this.health>0) this.characterClass.charAt(0);
+        if (this.health>0) return this.characterClass.charAt(0);
         return "X"; 
     }
 }
