@@ -44,6 +44,16 @@ export const CombatUI: React.FC<{
                 ) : null}
             </div>
             <LogUI log={props.state.log}></LogUI>
+            <br /><br />
+            {props.state.dragonHP > 0 ? (
+                <div>
+                    <iframe src="https://www.youtube.com/embed/syeudRZuuMo?autoplay=1"></iframe>
+                </div>
+            ) : (
+                <div>
+                    <iframe src="https://www.youtube.com/embed/ZMovw9o9YCk?autoplay=1"></iframe>
+                </div>
+            )}
         </div>
     );
 };
@@ -85,9 +95,9 @@ export const CharacterCombatUI: React.FC<{
     return (
         <span className={isDead? 'red': ''}>
             <span className="block">
-                {props.character.getASCIIStatus()}
-                </span>
-            <span className={"block "+hpClass}>[{props.character?.health}]</span>
+                <img src={props.character.getASCIIStatus()} className="avatarImage"></img>
+            </span><br />
+            <span className={"block bolder "+hpClass}>[{props.character?.health}]</span>
         </span>
     );
 };

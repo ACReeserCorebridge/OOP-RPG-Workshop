@@ -30,13 +30,16 @@ table.grid {
   font-size: 1em;
   margin: auto;
 }
+thead {
+  font-weight: bolder;
+}
 .grid td {
   border-collapse: collapse;
   text-align: center;
-  width: 3em;
+  min-width: 3em;
   height: 3em;
   margin: 0;
-  padding: 0;
+  padding: 15px;
   border: 1px solid darkgreen;
 }
 .block {
@@ -98,4 +101,11 @@ td.loot-chest{
 }
 .yellow{
   color: yellow;
+}
+.avatarImage {
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+}
+.bolder {
+  font-weight: bolder;
 }

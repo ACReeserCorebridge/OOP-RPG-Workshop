@@ -1,13 +1,9 @@
 import React from "react";
 
-export const ChestText: React.FC = () => {
+export const ChestText: React.FC<{isOpen: boolean}> = (props) => {
     return (
-      <span className="ascii">
-        {' ______ ___\n' +
-          '//    //  \\\\\n' +
-          '#=====##===#\n' +
-          '| [8] ||   |\n' +
-          '|_____||___|\n'+'\n'}
-      </span>
+      <div>
+        <img src={props.isOpen ? '/images/chest-open.png' : '/images/chest-closed.png'} width="10%"></img>
+      </div>
     );
   };

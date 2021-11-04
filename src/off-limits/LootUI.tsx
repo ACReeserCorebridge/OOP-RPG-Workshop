@@ -30,23 +30,25 @@ export const LootUI: React.FC<{
                 <table className="grid wide">
                     <tbody>
                         <tr>
-                            <td colSpan={3}>Your party finds 4 treasure chests</td>
+                            <td colSpan={3}><h3>Your party finds 4 treasure chests</h3></td>
                         </tr>
                         {props.state.characters.map((x, i) => (
                             <tr key={i}>
                                 <td>
-                                    {x.name} the {x.classname()} finds
+                                    <img src={x.imgUrl} className="avatarImage"></img>
+                                    <br /><br />
+                                    {x.name} the {x.classname()} finds the...
+                                    <br />
                                 </td>
-                                {
-                                    props.state.chests[i].opened ? <td className="loot-chest">
-                                        {props.state.chests[i].item.name}
-                                    </td> : <td className="loot-chest">
-                                        <ChestText></ChestText>
+                                <td>
+                                    <ChestText isOpen={props.state.chests[i].opened}></ChestText><br />
+                                    {
+                                        props.state.chests[i].opened ? <span className="bolder">{props.state.chests[i].item.name}</span> :
                                         <button onClick={() => props.loot(i)} className="smaller">
                                             LOOT
                                         </button>
-                                    </td>
-                                }
+                                    }
+                                </td>
                             </tr>
                         ))}
                         <tr>

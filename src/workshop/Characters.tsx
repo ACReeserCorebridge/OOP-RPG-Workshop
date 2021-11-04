@@ -1,123 +1,68 @@
-import { ICharacter, CharacterClassName, equip, ICharacterActionDecision } from '../off-limits/ICharacter';
-import { IWeapon, IItem, isMeleeWeapon } from '../off-limits/IWeapons';
+import { CharacterClassName, equip, ICharacterActionDecision } from '../off-limits/ICharacter';
+import { IWeapon, IItem } from '../off-limits/IWeapons';
 import { Character } from './BaseCharacter';
-import {
-  ClericStartItem,
-  MageStartItem,
-  ThiefStartItem,
-  WarriorStartItem,
-} from './Weapons';
+import { ClericStartItem, MageStartItem, ThiefStartItem, WarriorStartItem } from './Weapons';
 
 //todo: too many duplicate classes in this file! 
 //todo: customize the chooseAction() to better fight the dragon
 //todo: update the `getASCIIStatus` function(s) to return X when dead and a unique character per class
 
-export class Warrior implements ICharacter {
+export class Warrior extends Character {
   health: number = 5;
   position: number = 10;
   weapons: IWeapon[] = [];
   item?: IItem;
-  feet = new Feet(this);
+  imgUrl = "/images/conan.png";
   classname(): CharacterClassName {
     return 'Warrior';
   }
-  move(){
-    this.feet.move();
-  }
   constructor(public name: string, public key: number) {
+    super();
     equip(WarriorStartItem, this);
-  }
-  chooseAction(): ICharacterActionDecision {
-    return {
-      attack: this.weapons[0]
-    }
-  }
-  getASCIIStatus(): string {
-      return "@";
   }
 }
 
-export class Cleric implements ICharacter{
+export class Cleric extends Character {
   health: number = 5;
   position: number = 10;
   weapons: IWeapon[] = [];
   item?: IItem;
-  feet = new Feet(this);
+  imgUrl = "/images/cuthbert.png";
   classname(): CharacterClassName {
     return 'Cleric';
   }
-  move(){
-    this.feet.move();
-  }
   constructor(public name: string, public key: number) {
+    super();
     equip(ClericStartItem, this);
-  }
-  chooseAction(): ICharacterActionDecision {
-    return {
-      attack: this.weapons[0]
-    }
-  }
-  getASCIIStatus(): string {
-      return "@";
   }
 }
 
-export class Mage implements ICharacter {
+export class Mage extends Character {
   health: number = 5;
   position: number = 10;
   weapons: IWeapon[] = [];
   item?: IItem;
-  feet = new Feet(this);
+  imgUrl = "/images/merlin.png";
   classname(): CharacterClassName {
     return 'Mage';
   }
   constructor(public name: string, public key: number) {
+    super();
     equip(MageStartItem, this);
-  }
-  move(){
-    this.feet.move();
-  }
-  chooseAction(): ICharacterActionDecision {
-    return {
-      attack: this.weapons[0]
-    }
-  }
-  getASCIIStatus(): string {
-      return "@";
   }
 }
 
-export class Thief implements ICharacter {
+export class Thief extends Character {
   health: number = 5;
   position: number = 10;
   weapons: IWeapon[] = [];
   item?: IItem;
-  feet = new Feet(this);
-  move(){
-    this.feet.move();
-  }
+  imgUrl = "/images/bilbo.png";
   classname(): CharacterClassName {
     return 'Thief';
   }
   constructor(public name: string, public key: number) {
+    super();
     equip(ThiefStartItem, this);
-  }
-  chooseAction(): ICharacterActionDecision {
-    return {
-      attack: this.weapons[0]
-    }
-  }
-  getASCIIStatus(): string {
-      return "@";
-  }
-}
-
-//todo: something about this class is code smell...
-export class Feet{
-  constructor(private character: ICharacter){}
-  move(){
-    if (this.character.weapons.some(x => isMeleeWeapon(x))){
-      this.character.position = Math.max(this.character.position - 5, 1);
-    }
   }
 }
