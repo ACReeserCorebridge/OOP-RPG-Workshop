@@ -32,19 +32,19 @@ export class Club implements IMeleeWeapon {
 export class Hammer implements IMeleeWeapon {
   name = 'Hammer';
   damage = 5;
-  meleeRange = 5;
+  meleeRange = 2;
 }
 
 export class Flail implements IMeleeWeapon {
   name = 'Flail';
   damage = 8;
-  meleeRange = 10;
+  meleeRange = 2;
 }
 
 export class FlamingArrow implements IMeleeWeapon {
   name = 'Flaming Arrow';
   damage = 4;
-  meleeRange = 50;
+  meleeRange = 2;
 }
 
 export class ArrowSpray implements IRangedWeapon<FlamingArrow> {
@@ -60,8 +60,8 @@ export class UselessAmulet implements IItem {
 
 export class MagicFog implements IEnchantedItem {
   name = 'MagicFog';
-  fireDamage = 5;
-  partyHealthBonus = 5;
+  fireDamage = 4;
+  partyHealthBonus = 1;
 }
 
 export class HealthBoost implements IConsumableItem {

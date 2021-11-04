@@ -53,9 +53,7 @@ export class Warrior extends BaseCharacter {
         break;
       } else if (isRangedWeapon(weapon)) {
         currentWeapon = weapon;
-      } else if (!currentWeapon) {
-        currentWeapon = weapon;
-      } else if (!isRangedWeapon(currentWeapon) && currentWeapon.damage < weapon.damage) {
+      } else if (currentWeapon && !isRangedWeapon(currentWeapon) && currentWeapon.damage < weapon.damage) {
         currentWeapon = weapon;
       }
     };
@@ -96,9 +94,7 @@ export class Cleric extends BaseCharacter {
       if (isMeleeWeapon(weapon) && weapon.meleeRange >= this.position) {
         currentWeapon = weapon;
         break;
-      } else if (!currentWeapon) {
-        currentWeapon = weapon;
-      } else if (currentWeapon.damage < weapon.damage) {
+      } else if (currentWeapon && currentWeapon.damage < weapon.damage) {
         currentWeapon = weapon;
       }
     };
@@ -139,9 +135,7 @@ export class Mage extends BaseCharacter {
       if (isRangedWeapon(weapon)) {
         currentWeapon = weapon;
         break;
-      } else if (!currentWeapon) {
-        currentWeapon = weapon;
-      } else if (currentWeapon.damage < weapon.damage) {
+      } else if (currentWeapon && currentWeapon.damage < weapon.damage) {
         currentWeapon = weapon;
       }
     };
