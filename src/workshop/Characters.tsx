@@ -1,6 +1,5 @@
 import { ICharacter, CharacterClassName, equip, ICharacterActionDecision } from '../off-limits/ICharacter';
-import { IWeapon, IItem, isMeleeWeapon } from '../off-limits/IWeapons';
-import { Character } from './BaseCharacter';
+import { IWeapon, IItem, isMeleeWeapon, isRangedWeapon } from '../off-limits/IWeapons';
 import {
   ClericStartItem,
   MageStartItem,
@@ -8,107 +7,209 @@ import {
   WarriorStartItem,
 } from './Weapons';
 
-//todo: too many duplicate classes in this file! 
-//todo: customize the chooseAction() to better fight the dragon
-//todo: update the `getASCIIStatus` function(s) to return X when dead and a unique character per class
-
-export class Warrior implements ICharacter {
+abstract class BaseCharacter implements ICharacter {
   health: number = 5;
   position: number = 10;
   weapons: IWeapon[] = [];
   item?: IItem;
   feet = new Feet(this);
+
+  abstract classname(): CharacterClassName;
+  abstract doEquip(): string;
+  abstract chooseAction(): ICharacterActionDecision;
+  abstract ASCIIChar(): string;
+
+  constructor(public name: string, public key: number) {
+    this.doEquip();
+  }
+
+  move(){
+    this.feet.move();
+  }
+
+  getASCIIStatus(): string {
+    if (this.health > 0) {
+      return this.ASCIIChar();
+    }
+
+    return "X";
+  }
+}
+
+export class Warrior extends BaseCharacter {
   classname(): CharacterClassName {
     return 'Warrior';
   }
-  move(){
-    this.feet.move();
+
+  doEquip(): string {
+    return equip(WarriorStartItem, this);
   }
-  constructor(public name: string, public key: number) {
-    equip(WarriorStartItem, this);
-  }
+
   chooseAction(): ICharacterActionDecision {
+    let currentWeapon: IWeapon | undefined = undefined;
+    for (let weapon of this.weapons) {
+      if (isMeleeWeapon(weapon) && weapon.meleeRange >= this.position) {
+        currentWeapon = weapon;
+        break;
+      } else if (isRangedWeapon(weapon)) {
+        currentWeapon = weapon;
+      } else if (!currentWeapon) {
+        currentWeapon = weapon;
+      } else if (!isRangedWeapon(currentWeapon) && currentWeapon.damage < weapon.damage) {
+        currentWeapon = weapon;
+      }
+    };
+
+    if (currentWeapon) {
+      return {
+        attack: currentWeapon
+      };
+    }
+    
+    if (this.item) {
+      return {
+        use: this.item
+      };
+    }
     return {
       attack: this.weapons[0]
-    }
+    };
   }
-  getASCIIStatus(): string {
-      return "@";
+
+  ASCIIChar(): string {
+    return "W";
   }
 }
 
-export class Cleric implements ICharacter{
-  health: number = 5;
-  position: number = 10;
-  weapons: IWeapon[] = [];
-  item?: IItem;
-  feet = new Feet(this);
+export class Cleric extends BaseCharacter {
   classname(): CharacterClassName {
     return 'Cleric';
   }
-  move(){
-    this.feet.move();
+
+  doEquip(): string {
+    return equip(ClericStartItem, this);
   }
-  constructor(public name: string, public key: number) {
-    equip(ClericStartItem, this);
-  }
+
   chooseAction(): ICharacterActionDecision {
+    let currentWeapon: IWeapon | undefined = undefined;
+    for (let weapon of this.weapons) {
+      if (isMeleeWeapon(weapon) && weapon.meleeRange >= this.position) {
+        currentWeapon = weapon;
+        break;
+      } else if (!currentWeapon) {
+        currentWeapon = weapon;
+      } else if (currentWeapon.damage < weapon.damage) {
+        currentWeapon = weapon;
+      }
+    };
+
+    if (currentWeapon) {
+      return {
+        attack: currentWeapon
+      };
+    }
+    
+    if (this.item) {
+      return {
+        use: this.item
+      };
+    }
     return {
       attack: this.weapons[0]
-    }
+    };
   }
-  getASCIIStatus(): string {
-      return "@";
+
+  ASCIIChar(): string {
+    return "C";
   }
 }
 
-export class Mage implements ICharacter {
-  health: number = 5;
-  position: number = 10;
-  weapons: IWeapon[] = [];
-  item?: IItem;
-  feet = new Feet(this);
+export class Mage extends BaseCharacter {
   classname(): CharacterClassName {
     return 'Mage';
   }
-  constructor(public name: string, public key: number) {
-    equip(MageStartItem, this);
+
+  doEquip(): string {
+    return equip(MageStartItem, this);
   }
-  move(){
-    this.feet.move();
-  }
+
   chooseAction(): ICharacterActionDecision {
+    let currentWeapon: IWeapon | undefined = undefined;
+    for (let weapon of this.weapons) {
+      if (isRangedWeapon(weapon)) {
+        currentWeapon = weapon;
+        break;
+      } else if (!currentWeapon) {
+        currentWeapon = weapon;
+      } else if (currentWeapon.damage < weapon.damage) {
+        currentWeapon = weapon;
+      }
+    };
+
+    if (currentWeapon) {
+      return {
+        attack: currentWeapon
+      };
+    }
+    
+    if (this.item) {
+      return {
+        use: this.item
+      };
+    }
     return {
       attack: this.weapons[0]
-    }
+    };
   }
-  getASCIIStatus(): string {
-      return "@";
+
+  ASCIIChar(): string {
+    return "M";
   }
 }
 
-export class Thief implements ICharacter {
-  health: number = 5;
-  position: number = 10;
-  weapons: IWeapon[] = [];
-  item?: IItem;
-  feet = new Feet(this);
-  move(){
-    this.feet.move();
-  }
+export class Thief extends BaseCharacter {
   classname(): CharacterClassName {
     return 'Thief';
   }
-  constructor(public name: string, public key: number) {
-    equip(ThiefStartItem, this);
+
+  doEquip(): string {
+    return equip(ThiefStartItem, this);
   }
+
   chooseAction(): ICharacterActionDecision {
+    let currentWeapon: IWeapon | undefined = undefined;
+    for (let weapon of this.weapons) {
+      if (isMeleeWeapon(weapon) && weapon.meleeRange >= this.position) {
+        currentWeapon = weapon;
+        break;
+      } else if (isRangedWeapon(weapon)) {
+        currentWeapon = weapon;
+      } else if (!currentWeapon) {
+        currentWeapon = weapon;
+      } else if (!isRangedWeapon(currentWeapon) && currentWeapon.damage < weapon.damage) {
+        currentWeapon = weapon;
+      }
+    };
+
+    if (currentWeapon) {
+      return {
+        attack: currentWeapon
+      };
+    }
+    
+    if (this.item) {
+      return {
+        use: this.item
+      };
+    }
     return {
       attack: this.weapons[0]
-    }
+    };
   }
-  getASCIIStatus(): string {
-      return "@";
+
+
+  ASCIIChar(): string {
+    return "T";
   }
 }
 
