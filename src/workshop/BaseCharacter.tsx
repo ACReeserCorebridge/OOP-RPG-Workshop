@@ -1,24 +1,35 @@
-import { CharacterClassName, ICharacter, ICharacterActionDecision } from "../off-limits/ICharacter";
-import { IWeapon, IItem } from "../off-limits/IWeapons";
+import { CharacterClassName, equip, ICharacter, ICharacterActionDecision } from "../off-limits/ICharacter";
+import { IWeapon, IItem, isMeleeWeapon, isRangedWeapon } from "../off-limits/IWeapons";
+
 
 //todo: use this base class somehow in Characters.tsx
-export class Character implements ICharacter {
+export abstract class Character implements ICharacter {
     name: string = '';
     health: number = 5;
     position: number = 10;
     weapons: IWeapon[] = [];
-    item?: IItem;
+    item?: IItem;    
     
-    classname(): CharacterClassName {
-        throw new Error("Method not implemented.");
-    }
-    move(){
-        throw new Error("Method not implemented.");
-    }
-    chooseAction(): ICharacterActionDecision{
-        throw new Error("Method not implemented.");
-    }
-    getASCIIStatus(): string {
-        throw new Error("Method not implemented.");
-    }
+    constructor(protected avatar:string,     
+                protected characterClass: CharacterClassName, 
+                protected equipment: IItem|undefined, 
+                public key: number) { equip(equipment, this); }    
+
+    classname: () => CharacterClassName = () => this.characterClass;
+    move: () => void = () => this.position = Math.max(this.position - 5, 1);
+    chooseAction: () => ICharacterActionDecision = () => {        
+        let canAttack:boolean = false;  
+        let weapon = this.weapons[0];
+        if(this.health < 2 && this.item) return { use: this.item };                    
+        if(weapon) {    
+          if(isMeleeWeapon(weapon) && this.position <= weapon.meleeRange)
+            canAttack = true;                            
+          if(isRangedWeapon(weapon) && weapon.projectiles.length > 0)
+            canAttack = true;                            
+          return canAttack ? { attack: weapon } : { use: this.item } as ICharacterActionDecision;
+        } else {
+          return { use: this.item } as ICharacterActionDecision;
+        } 
+    };
+    getASCIIStatus:() => string = () => this.health <= 0 ? "X" : this.avatar;
 }
