@@ -23,34 +23,65 @@ import { IWeapon, IItem, IMeleeWeapon, IRangedWeapon, IConsumableItem, IEnchante
 // }
 
 // WEAPON ARMORY
-// todo: add more and better weapons!
 export class Club implements IMeleeWeapon {
   name = 'Club';
   damage = 1;
   meleeRange = 1;
 }
 
+export class Hammer implements IMeleeWeapon {
+  name = 'Hammer';
+  damage = 5;
+  meleeRange = 2;
+}
+
+export class Flail implements IMeleeWeapon {
+  name = 'Flail';
+  damage = 8;
+  meleeRange = 2;
+}
+
+export class FlamingArrow implements IMeleeWeapon {
+  name = 'Flaming Arrow';
+  damage = 4;
+  meleeRange = 2;
+}
+
+export class ArrowSpray implements IRangedWeapon<FlamingArrow> {
+  name = 'Arrow Spray';
+  damage: 0 = 0;
+  projectiles = [new FlamingArrow, new FlamingArrow, new FlamingArrow, new FlamingArrow, new FlamingArrow]
+}
+
 // ITEM VAULT
-// todo: add more and better items!
 export class UselessAmulet implements IItem {
   name = 'Useless Amulet';
 }
 
+export class MagicFog implements IEnchantedItem {
+  name = 'MagicFog';
+  fireDamage = 4;
+  partyHealthBonus = 1;
+}
+
+export class HealthBoost implements IConsumableItem {
+  name = 'Health Boost';
+  healthBonus = 10;
+}
+
 
 // ITEM ASSIGNMENTS
-// todo: assign starting items
-export const WarriorStartItem: IItem|undefined = new Club();
-export const ClericStartItem: IItem|undefined = new Club();
+export const WarriorStartItem: IItem|undefined = new ArrowSpray();
+export const ClericStartItem: IItem|undefined = new Hammer();
 export const MageStartItem: IItem|undefined = undefined;
-export const ThiefStartItem: IItem|undefined = new Club();
+export const ThiefStartItem: IItem|undefined = new Flail();
 
 // TREASURE ASSIGNMENTS
-// todo: assign treasure from chests
 export function GetItemsInTreasureChests(): IItem[]{
   return [
-    new UselessAmulet(), //this will be found by the warrior
-    new UselessAmulet(), //this will be found by the cleric
-    new UselessAmulet(), //this will be found by the mage
-    new UselessAmulet(), //this will be found by the thief
+    new Hammer(),
+    new HealthBoost(),
+    new MagicFog(),
+    new ArrowSpray()
   ];
 }
