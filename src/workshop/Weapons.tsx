@@ -30,27 +30,64 @@ export class Club implements IMeleeWeapon {
   meleeRange = 1;
 }
 
-// ITEM VAULT
-// todo: add more and better items!
-export class UselessAmulet implements IItem {
-  name = 'Useless Amulet';
+export class Broadsword implements IMeleeWeapon {
+  name = 'Broadsword';
+  damage = 3;
+  meleeRange = 1;
+}
+
+export class Dagger implements IMeleeWeapon {
+  name = 'Dagger';
+  damage = 2;
+  meleeRange = 1;
+}
+
+export class Mace implements IMeleeWeapon {
+  name = 'Mace';
+  damage = 2;
+  meleeRange = 1;
+}
+
+export class MagicBolt implements IWeapon {
+  name = 'Magic Bolt';
+  damage = 5;
+}
+
+export class Staff implements IRangedWeapon<MagicBolt> {
+  name = 'Staff';
+  damage: 0 = 0;
+  projectiles = [
+    new MagicBolt, new MagicBolt, new MagicBolt, new MagicBolt,
+    new MagicBolt, new MagicBolt, new MagicBolt, new MagicBolt,
+    new MagicBolt, new MagicBolt, new MagicBolt, new MagicBolt,
+  ]
+}
+
+export class HolyAmulet implements IEnchantedItem {
+  name = 'Holy Amulet';
+  partyHealthBonus = 4;
+}
+
+export class HealthPotion implements IConsumableItem {
+  name = 'Health Potion';
+  healthBonus = 3
 }
 
 
 // ITEM ASSIGNMENTS
 // todo: assign starting items
-export const WarriorStartItem: IItem|undefined = new Club();
-export const ClericStartItem: IItem|undefined = new Club();
-export const MageStartItem: IItem|undefined = undefined;
-export const ThiefStartItem: IItem|undefined = new Club();
+export const WarriorStartItem: IItem|undefined = new Broadsword();
+export const ClericStartItem: IItem|undefined = new Mace();
+export const MageStartItem: IItem|undefined = new Staff();
+export const ThiefStartItem: IItem|undefined = new Dagger();
 
 // TREASURE ASSIGNMENTS
 // todo: assign treasure from chests
 export function GetItemsInTreasureChests(): IItem[]{
   return [
-    new UselessAmulet(), //this will be found by the warrior
-    new UselessAmulet(), //this will be found by the cleric
-    new UselessAmulet(), //this will be found by the mage
-    new UselessAmulet(), //this will be found by the thief
+    new HealthPotion(), //this will be found by the warrior
+    new HolyAmulet(), //this will be found by the cleric
+    new HealthPotion(), //this will be found by the mage
+    new HealthPotion(), //this will be found by the thief
   ];
 }
