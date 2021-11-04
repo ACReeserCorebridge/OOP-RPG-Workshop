@@ -12,103 +12,31 @@ import {
 //todo: customize the chooseAction() to better fight the dragon
 //todo: update the `getASCIIStatus` function(s) to return X when dead and a unique character per class
 
-export class Warrior implements ICharacter {
-  health: number = 5;
-  position: number = 10;
-  weapons: IWeapon[] = [];
-  item?: IItem;
-  feet = new Feet(this);
-  classname(): CharacterClassName {
-    return 'Warrior';
-  }
-  move(){
-    this.feet.move();
-  }
+export class Warrior extends Character implements ICharacter {
   constructor(public name: string, public key: number) {
-    equip(WarriorStartItem, this);
-  }
-  chooseAction(): ICharacterActionDecision {
-    return {
-      attack: this.weapons[0]
-    }
-  }
-  getASCIIStatus(): string {
-      return "@";
+    super(name,key, WarriorStartItem);
+    this.characterClass = 'Warrior';
   }
 }
 
-export class Cleric implements ICharacter{
-  health: number = 5;
-  position: number = 10;
-  weapons: IWeapon[] = [];
-  item?: IItem;
-  feet = new Feet(this);
-  classname(): CharacterClassName {
-    return 'Cleric';
-  }
-  move(){
-    this.feet.move();
-  }
+export class Cleric extends Character implements ICharacter{
   constructor(public name: string, public key: number) {
-    equip(ClericStartItem, this);
-  }
-  chooseAction(): ICharacterActionDecision {
-    return {
-      attack: this.weapons[0]
-    }
-  }
-  getASCIIStatus(): string {
-      return "@";
+    super(name,key, ClericStartItem);
+    this.characterClass = 'Cleric';
   }
 }
 
-export class Mage implements ICharacter {
-  health: number = 5;
-  position: number = 10;
-  weapons: IWeapon[] = [];
-  item?: IItem;
-  feet = new Feet(this);
-  classname(): CharacterClassName {
-    return 'Mage';
-  }
+export class Mage extends Character implements ICharacter {
   constructor(public name: string, public key: number) {
-    equip(MageStartItem, this);
-  }
-  move(){
-    this.feet.move();
-  }
-  chooseAction(): ICharacterActionDecision {
-    return {
-      attack: this.weapons[0]
-    }
-  }
-  getASCIIStatus(): string {
-      return "@";
+    super(name,key, MageStartItem);
+    this.characterClass = 'Mage';
   }
 }
 
-export class Thief implements ICharacter {
-  health: number = 5;
-  position: number = 10;
-  weapons: IWeapon[] = [];
-  item?: IItem;
-  feet = new Feet(this);
-  move(){
-    this.feet.move();
-  }
-  classname(): CharacterClassName {
-    return 'Thief';
-  }
+export class Thief extends Character implements ICharacter {
   constructor(public name: string, public key: number) {
-    equip(ThiefStartItem, this);
-  }
-  chooseAction(): ICharacterActionDecision {
-    return {
-      attack: this.weapons[0]
-    }
-  }
-  getASCIIStatus(): string {
-      return "@";
+    super(name,key, ThiefStartItem);
+    this.characterClass = 'Thief';
   }
 }
 

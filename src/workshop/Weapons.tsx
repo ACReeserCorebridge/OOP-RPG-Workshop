@@ -30,27 +30,49 @@ export class Club implements IMeleeWeapon {
   meleeRange = 1;
 }
 
+export class Excaliber implements IMeleeWeapon {
+  name = 'Excaliber';
+  damage = 100;
+  meleeRange = 1;
+}
+
+export class Crossbow implements IRangedWeapon<Arrow> {
+  damage: 0 = 0;
+  name = 'Crossbow';
+  meleeRange = 50;
+  projectiles = [new Arrow()];
+}
+
+export class Arrow implements IWeapon {
+  name = 'Arrow';
+  damage = 100;
+}
+
 // ITEM VAULT
 // todo: add more and better items!
 export class UselessAmulet implements IItem {
   name = 'Useless Amulet';
 }
 
+export class AwesomeAmulet implements IConsumableItem {
+  name = 'Awesome Amulet';
+  healthBonus = 5;
+}
 
 // ITEM ASSIGNMENTS
 // todo: assign starting items
-export const WarriorStartItem: IItem|undefined = new Club();
-export const ClericStartItem: IItem|undefined = new Club();
+export const WarriorStartItem: IItem|undefined = new Excaliber();
+export const ClericStartItem: IItem|undefined = new Excaliber();
 export const MageStartItem: IItem|undefined = undefined;
-export const ThiefStartItem: IItem|undefined = new Club();
+export const ThiefStartItem: IItem|undefined = new Excaliber();
 
 // TREASURE ASSIGNMENTS
 // todo: assign treasure from chests
 export function GetItemsInTreasureChests(): IItem[]{
   return [
-    new UselessAmulet(), //this will be found by the warrior
-    new UselessAmulet(), //this will be found by the cleric
-    new UselessAmulet(), //this will be found by the mage
-    new UselessAmulet(), //this will be found by the thief
+    new AwesomeAmulet(), //this will be found by the warrior
+    new AwesomeAmulet(), //this will be found by the cleric
+    new AwesomeAmulet(), //this will be found by the mage
+    new AwesomeAmulet(), //this will be found by the thief
   ];
 }

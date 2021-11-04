@@ -1,24 +1,36 @@
-import { CharacterClassName, ICharacter, ICharacterActionDecision } from "../off-limits/ICharacter";
+import { CharacterClassName,  equip, ICharacter, ICharacterActionDecision } from "../off-limits/ICharacter";
 import { IWeapon, IItem } from "../off-limits/IWeapons";
+import { Feet } from "./Characters";
+import { AwesomeAmulet } from "./Weapons";
 
-//todo: use this base class somehow in Characters.tsx
 export class Character implements ICharacter {
-    name: string = '';
     health: number = 5;
     position: number = 10;
     weapons: IWeapon[] = [];
     item?: IItem;
-    
+    name: string;
+    characterClass: CharacterClassName = "Cleric";
+    feet = new Feet(this);
+    constructor(public nameInit: string, public key: number, equipItem: IItem|undefined) {
+        this.name = nameInit;
+        equip(equipItem, this);
+    }
     classname(): CharacterClassName {
-        throw new Error("Method not implemented.");
+        return this.characterClass;
     }
     move(){
-        throw new Error("Method not implemented.");
+        this.feet.move();
     }
     chooseAction(): ICharacterActionDecision{
-        throw new Error("Method not implemented.");
+        if (this.health<5) return {
+            use: this.item || new AwesomeAmulet()
+        } 
+        return {
+            attack: this.weapons[0]
+          }
     }
     getASCIIStatus(): string {
-        throw new Error("Method not implemented.");
+        if (this.health>0) return this.characterClass.charAt(0);
+        return "X"; 
     }
 }
