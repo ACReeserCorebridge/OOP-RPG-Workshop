@@ -49,7 +49,7 @@ export class Mage extends BaseCharacter {
 
 export class Thief extends BaseCharacter {
   constructor(name: string, key: number) {
-    super(name, key, 'Thief', '🗡️');
+    super(name, key, 'Thief', '🏹');
     equip(ThiefStartItem, this);
   }
   chooseAction(): ICharacterActionDecision {
