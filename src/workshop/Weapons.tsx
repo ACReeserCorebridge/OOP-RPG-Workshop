@@ -1,56 +1,26 @@
-import { IWeapon, IItem, IMeleeWeapon, IRangedWeapon, IConsumableItem, IEnchantedItem } from "../off-limits/IWeapons";
-
-// INTERFACE QUICK REFERENCE
-// export interface IItem {
-//   name: string;
-// }
-// export interface IWeapon extends IItem {
-//   damage: number;
-// }
-// export interface IMeleeWeapon extends IWeapon {
-//   meleeRange: number;
-// }
-// export interface IRangedWeapon<T extends IWeapon> {
-//   damage: 0;
-//   projectiles: T[];
-// }
-// export interface IEnchantedItem extends IItem {
-//   fireDamage?: number;
-//   partyHealthBonus?: number;
-// }
-// export interface IConsumableItem extends IItem {
-//   healthBonus: number;
-// }
-
-// WEAPON ARMORY
-// todo: add more and better weapons!
-export class Club implements IMeleeWeapon {
-  name = 'Club';
-  damage = 1;
-  meleeRange = 1;
-}
-
-// ITEM VAULT
-// todo: add more and better items!
-export class UselessAmulet implements IItem {
-  name = 'Useless Amulet';
-}
+import { IItem } from "../off-limits/IWeapons";
+import { EyeOfSszzaas } from "./Artifacts/EyeOfSszzaas";
+import { DivinePotion } from "./Items/DivinePotion";
+import { DivineAmulet } from "./Artifacts/DivineAmulet";
+import { LongSword } from "./Weapons/LongSword";
+import { Grimoire } from "./Weapons/Grimoire";
+import { Crossbow } from "./Weapons/Crossbow";
+import { DivineScepter } from "./Weapons/DivineScepter";
+import { Sling } from "./Weapons/Sling";
 
 
 // ITEM ASSIGNMENTS
-// todo: assign starting items
-export const WarriorStartItem: IItem|undefined = new Club();
-export const ClericStartItem: IItem|undefined = new Club();
-export const MageStartItem: IItem|undefined = undefined;
-export const ThiefStartItem: IItem|undefined = new Club();
+export const WarriorStartItem: IItem|undefined = new LongSword();
+export const ClericStartItem: IItem|undefined = new DivineScepter();
+export const MageStartItem: IItem|undefined = new Grimoire();
+export const ThiefStartItem: IItem|undefined = new Crossbow();
 
 // TREASURE ASSIGNMENTS
-// todo: assign treasure from chests
 export function GetItemsInTreasureChests(): IItem[]{
   return [
-    new UselessAmulet(), //this will be found by the warrior
-    new UselessAmulet(), //this will be found by the cleric
-    new UselessAmulet(), //this will be found by the mage
-    new UselessAmulet(), //this will be found by the thief
+    new DivinePotion(), //this will be found by the warrior
+    new DivineAmulet(), //this will be found by the cleric
+    new EyeOfSszzaas(), //this will be found by the mage
+    new Sling(), //this will be found by the thief
   ];
 }
