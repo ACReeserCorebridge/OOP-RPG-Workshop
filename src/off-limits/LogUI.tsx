@@ -1,12 +1,13 @@
+import { Container, Text } from "@chakra-ui/layout";
 import React from "react";
 
 export const LogUI: React.FC<{
     log: string[]
 }> = (props) => {
-    return <div>
-        <span className="block">☞ {props.log[0]}</span>
-        <span className="block">{props.log[1]}</span>
-        <span className="block">{props.log[2]}</span>
-        <span className="block">{props.log[3]}</span>
-    </div>
+    return <Container>
+        <Text>☞ {props.log[0]}</Text>
+        <Text>{props.log[1]}</Text>
+        <Text>{props.log[2]}</Text>
+        <Text>{props.log[3]}</Text>
+    </Container>
 }
