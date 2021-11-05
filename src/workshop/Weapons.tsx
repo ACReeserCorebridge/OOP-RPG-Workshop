@@ -1,4 +1,4 @@
-import { IWeapon, IItem, IMeleeWeapon, IRangedWeapon, IConsumableItem, IEnchantedItem } from "../off-limits/IWeapons";
+import { IWeapon, IItem, IMeleeWeapon, IRangedWeapon, IConsumableItem, IEnchantedItem, isMeleeWeapon, isRangedWeapon } from "../off-limits/IWeapons";
 
 // INTERFACE QUICK REFERENCE
 // export interface IItem {
@@ -29,21 +29,16 @@ export class Club implements IMeleeWeapon {
   meleeRange = 1;
 }
 
-// ITEM VAULT
-export class UselessAmulet implements IItem {
-  name = 'Useless Amulet';
-}
-
 export class Arrow implements IWeapon {
   name = 'Arrow';
-  damage = 2;
+  damage = 5;
 }
 
 export class Bow implements IRangedWeapon<Arrow>{
   name: string = 'Bow';
   damage: 0 = 0;
   projectiles: Arrow[] = [];
-  constructor(startingArrows: number = 10) {
+  constructor(startingArrows: number = 5) {
     for (let i = 0; i < startingArrows; i++) {
       this.projectiles.push(new Arrow());
     }
@@ -65,46 +60,57 @@ export class FireStaff implements IRangedWeapon<Fireball>{
   }
 }
 
-export class HealingWand implements IEnchantedItem {
-  name = 'Healing Wand';
-  fireDamage = 0;
-  partyHealthBonus = 1;
-}
-
 export class Hammer implements IMeleeWeapon {
   name = 'Hammer';
   damage = 5;
   meleeRange = 1;
 }
-
 export class Longsword implements IMeleeWeapon {
   name = 'Longsword';
-  damage = 7;
+  damage = 6;
   meleeRange = 2;
 }
+export class Dagger implements IMeleeWeapon {
+  name = 'Dagger';
+  damage = 3;
+  meleeRange = 0;
+}
 
+// ITEM VAULT
+export class UselessAmulet implements IItem {
+  name = 'Useless Amulet';
+}
+export class FireGloves implements IEnchantedItem {
+  name = 'Fire Gloves';
+  fireDamage = 1;
+}
+export class HealingWand implements IEnchantedItem {
+  name = 'Healing Wand';
+  fireDamage = 0;
+  partyHealthBonus = 1;
+}
 export class HealingPotion implements IConsumableItem {
   name = 'Healing Potion';
   healthBonus = 5;
 }
 
-export class FireGloves implements IEnchantedItem {
-  name = 'Fire Gloves';
-  fireDamage = 3;
-}
-
 // ITEM ASSIGNMENTS
 export const WarriorStartItem: IItem|undefined = new Longsword();
 export const ClericStartItem: IItem|undefined = new Hammer();
-export const MageStartItem: IItem|undefined = new FireStaff(30);
-export const ThiefStartItem: IItem|undefined = new Bow(20);
+export const MageStartItem: IItem|undefined = new FireStaff(3);
+export const ThiefStartItem: IItem|undefined = new Bow(6);
+export const ThieAditionalfStartItem: IItem|undefined = new Dagger();
 
 // TREASURE ASSIGNMENTS
 export function GetItemsInTreasureChests(): IItem[]{
   return [
-    new UselessAmulet(), //this will be found by the warrior
+    new HealingPotion(), //this will be found by the warrior
     new FireGloves(), //this will be found by the cleric
     new HealingWand(), //this will be found by the mage
-    new HealingPotion(), //this will be found by the thief
+    new UselessAmulet(), //this will be found by the thief
   ];
+}
+
+export function isWeaponFitForUse(weapon: IWeapon) {
+  return isMeleeWeapon(weapon) || (isRangedWeapon(weapon) && (weapon as IRangedWeapon<any>).projectiles.length > 0);
 }

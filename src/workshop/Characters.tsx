@@ -1,25 +1,18 @@
 import { equip, ICharacterActionDecision } from '../off-limits/ICharacter';
+import { IEnchantedItem } from '../off-limits/IWeapons';
 import { BaseCharacter } from './BaseCharacter';
 import {
   ClericStartItem,
   MageStartItem,
+  ThieAditionalfStartItem as ThiefAditionalStartItem,
   ThiefStartItem,
   WarriorStartItem,
 } from './Weapons';
-
-//todo: too many duplicate classes in this file! 
-//todo: customize the chooseAction() to better fight the dragon
-//todo: update the `getASCIIStatus` function(s) to return X when dead and a unique character per class
 
 export class Warrior extends BaseCharacter {
   constructor(name: string, key: number) {
     super(name, key, 'Warrior', '⚔️');
     equip(WarriorStartItem, this);
-  }
-  chooseAction(): ICharacterActionDecision {
-    return {
-      attack: this.weapons[0]
-    }
   }
 }
 
@@ -28,11 +21,6 @@ export class Cleric extends BaseCharacter{
     super(name, key, 'Cleric', '⚒️');
     equip(ClericStartItem, this);
   }
-  chooseAction(): ICharacterActionDecision {
-    return {
-      attack: this.weapons[0]
-    }
-  }
 }
 
 export class Mage extends BaseCharacter {
@@ -40,10 +28,11 @@ export class Mage extends BaseCharacter {
     super(name, key, 'Mage', '✨');
     equip(MageStartItem, this);
   }
+
   chooseAction(): ICharacterActionDecision {
-    return {
-      attack: this.weapons[0]
-    }
+    if (this.item && (this.item as IEnchantedItem).partyHealthBonus) // mage prioritizes healing
+      return { use: this.item };
+    return super.chooseAction();
   }
 }
 
@@ -51,10 +40,6 @@ export class Thief extends BaseCharacter {
   constructor(name: string, key: number) {
     super(name, key, 'Thief', '🏹');
     equip(ThiefStartItem, this);
-  }
-  chooseAction(): ICharacterActionDecision {
-    return {
-      attack: this.weapons[0]
-    }
+    equip(ThiefAditionalStartItem, this);
   }
 }
