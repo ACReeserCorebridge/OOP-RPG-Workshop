@@ -47,7 +47,7 @@ export class Character implements ICharacter {
                     if (aProjectile && bProjectile) {
                         return aProjectile.damage > bProjectile.damage ? previousWeapon : currentWeapon;
                     }
-                    if (aProjectile && !bProjectile) {
+                    else if (aProjectile && !bProjectile) {
                         return previousWeapon;
                     }
                     else if (!aProjectile && bProjectile) {
