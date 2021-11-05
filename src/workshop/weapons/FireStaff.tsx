@@ -1,11 +1,10 @@
-import { IEnchantedItem, IRangedWeapon } from "../../off-limits/IWeapons";
-import { Arrow } from "./projectiles/Arrow";
+import { IRangedWeapon } from "../../off-limits/IWeapons";
 import { FireBolt } from "./projectiles/FireBolt";
 
-export class FireStaff implements IRangedWeapon<Arrow> {
+export class FireStaff implements IRangedWeapon<FireBolt> {
   name: string;
   damage: 0;
-  projectiles: Arrow[];
+  projectiles: FireBolt[];
   
   constructor() {
     this.name = "Fire Staff";

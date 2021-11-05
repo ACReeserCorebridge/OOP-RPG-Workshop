@@ -1,11 +1,9 @@
 import { IItem } from "../../off-limits/IWeapons";
 import { HealthPotion } from "../items/HealthPotion";
-import { Sword } from "../weapons/Sword";
 import { FireStaff } from "../weapons/FireStaff";
 import { LifeStaff } from "../weapons/LifeStaff";
 import { Musket } from "../weapons/Musket";
 import { GreatAxe } from "../weapons/GreatAxe";
-import { Bow } from "../weapons/Bow";
 
 export const WarriorStartItem: IItem|undefined = new GreatAxe();
 export const ClericStartItem: IItem|undefined = new LifeStaff();
