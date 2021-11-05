@@ -7,7 +7,7 @@ export class Sword implements IMeleeWeapon {
   meleeRange = 2;
 }
 
-export class EnchantedSword extends Sword {
+export class EnchantedSword extends Sword implements IEnchantedItem {
   name = 'Enchanted Sword';
   fireDamage = 3;
 }
@@ -18,7 +18,7 @@ export class Knife implements IMeleeWeapon {
   meleeRange = 1;
 }
 
-export class EnchantedKnife extends Knife {
+export class EnchantedKnife extends Knife implements IEnchantedItem {
   name = 'Enchanted Knife';
   fireDamage = 3;
 }
@@ -35,7 +35,7 @@ export class Staff implements IRangedWeapon<StaffCharge> {
 }
 
 // dragonDamage: dmg + fireDmg + boltDmg,
-export class EnchantedStaff extends Staff {
+export class EnchantedStaff extends Staff implements IEnchantedItem {
   name = 'Fire bolt Staff';
   fireDamage = 3;
   damage = 9;
