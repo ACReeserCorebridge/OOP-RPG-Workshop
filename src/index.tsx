@@ -1,14 +1,17 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
-import { Cleric, Mage, Thief, Warrior } from './workshop/Characters';
 import {  GameTick, CombatPhase } from './off-limits/Game';
 import './style.css';
 import { CombatUI } from './off-limits/CombatUI';
 import { LootUI } from './off-limits/LootUI';
 import { MenuUI } from './off-limits/MenuUI';
 import { equip, ICharacter } from './off-limits/ICharacter';
-import { GetItemsInTreasureChests } from './workshop/Weapons';
 import { IItem } from './off-limits/IWeapons';
+import Warrior from './workshop/characters/Warrior';
+import Cleric from './workshop/characters/Cleric';
+import Mage from './workshop/characters/Mage';
+import Thief from './workshop/characters/Thief';
+import { GetItemsInTreasureChests } from './workshop/systems/Loot';
 
 interface AppProps {}
 export interface AppState {
