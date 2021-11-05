@@ -1,56 +1,80 @@
 import { IWeapon, IItem, IMeleeWeapon, IRangedWeapon, IConsumableItem, IEnchantedItem } from "../off-limits/IWeapons";
 
-// INTERFACE QUICK REFERENCE
-// export interface IItem {
-//   name: string;
-// }
-// export interface IWeapon extends IItem {
-//   damage: number;
-// }
-// export interface IMeleeWeapon extends IWeapon {
-//   meleeRange: number;
-// }
-// export interface IRangedWeapon<T extends IWeapon> {
-//   damage: 0;
-//   projectiles: T[];
-// }
-// export interface IEnchantedItem extends IItem {
-//   fireDamage?: number;
-//   partyHealthBonus?: number;
-// }
-// export interface IConsumableItem extends IItem {
-//   healthBonus: number;
-// }
-
 // WEAPON ARMORY
-// todo: add more and better weapons!
-export class Club implements IMeleeWeapon {
-  name = 'Club';
-  damage = 1;
+export class Sword implements IMeleeWeapon {
+  name = 'Sword';
+  damage = 9;
+  meleeRange = 2;
+}
+
+export class EnchantedSword extends Sword implements IEnchantedItem {
+  name = 'Enchanted Sword';
+  fireDamage = 3;
+}
+
+export class Knife implements IMeleeWeapon {
+  name = 'Knife';
+  damage = 9;
   meleeRange = 1;
 }
 
-// ITEM VAULT
-// todo: add more and better items!
-export class UselessAmulet implements IItem {
-  name = 'Useless Amulet';
+export class EnchantedKnife extends Knife implements IEnchantedItem {
+  name = 'Enchanted Knife';
+  fireDamage = 3;
 }
 
+export class Staff implements IRangedWeapon<StaffCharge> {
+  name = 'Staff';
+  damage: any;
+  projectiles:StaffCharge[] = [];
+  constructor() {
+    for (let i = 0; i <= 100; i++) {
+      this.projectiles.push(new StaffCharge());
+    }
+  }
+}
+
+// dragonDamage: dmg + fireDmg + boltDmg,
+export class EnchantedStaff extends Staff implements IEnchantedItem {
+  name = 'Fire bolt Staff';
+  fireDamage = 3;
+  damage = 9;
+}
+
+export class StaffCharge implements IWeapon {
+  name = 'Fire bolt';
+  damage = 3;
+}
+
+// ITEM VAULT
+export class UnstablePotion implements IEnchantedItem {
+  name = 'Unstable Potion';
+  fireDamage = 3;
+  partyHealthBonus = 4;
+}
+
+export class Stimpack implements IConsumableItem {
+  name = 'Stimpack';
+  healthBonus = 4;
+}
 
 // ITEM ASSIGNMENTS
-// todo: assign starting items
-export const WarriorStartItem: IItem|undefined = new Club();
-export const ClericStartItem: IItem|undefined = new Club();
-export const MageStartItem: IItem|undefined = undefined;
-export const ThiefStartItem: IItem|undefined = new Club();
+// NOTES: EnchantedStaff is too OP
+export const WarriorStartItem: IItem|undefined = new EnchantedSword();
+export const ClericStartItem: IItem|undefined = new EnchantedSword();
+export const MageStartItem: IItem|undefined = new EnchantedStaff();
+export const ThiefStartItem: IItem|undefined = new EnchantedKnife();
+// export const WarriorStartItem: IItem|undefined = new EnchantedStaff();
+// export const ClericStartItem: IItem|undefined = new EnchantedSword();
+// export const MageStartItem: IItem|undefined = new EnchantedStaff();
+// export const ThiefStartItem: IItem|undefined = new EnchantedStaff();
 
 // TREASURE ASSIGNMENTS
-// todo: assign treasure from chests
 export function GetItemsInTreasureChests(): IItem[]{
   return [
-    new UselessAmulet(), //this will be found by the warrior
-    new UselessAmulet(), //this will be found by the cleric
-    new UselessAmulet(), //this will be found by the mage
-    new UselessAmulet(), //this will be found by the thief
+    new Stimpack(), //this will be found by the warrior
+    new UnstablePotion(), //this will be found by the cleric
+    new UnstablePotion(), //this will be found by the mage
+    new Stimpack(), //this will be found by the thief
   ];
 }
