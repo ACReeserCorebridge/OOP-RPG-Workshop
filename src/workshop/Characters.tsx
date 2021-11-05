@@ -1,5 +1,5 @@
 import { ICharacter, CharacterClassName, equip, ICharacterActionDecision } from '../off-limits/ICharacter';
-import { IWeapon, IItem, isMeleeWeapon } from '../off-limits/IWeapons';
+import { IWeapon, IItem, isMeleeWeapon, isRangedWeapon, isEnchantedItem } from '../off-limits/IWeapons';
 import { Character } from './BaseCharacter';
 import {
   ClericStartItem,
@@ -13,7 +13,7 @@ import {
 //todo: update the `getASCIIStatus` function(s) to return X when dead and a unique character per class
 
 export class Warrior implements ICharacter {
-  health: number = 5;
+  health: number = 20;
   position: number = 10;
   weapons: IWeapon[] = [];
   item?: IItem;
@@ -33,12 +33,12 @@ export class Warrior implements ICharacter {
     }
   }
   getASCIIStatus(): string {
-      return "@";
+      return this.health <= 0 ? "x"  : "@";
   }
 }
 
 export class Cleric implements ICharacter{
-  health: number = 5;
+  health: number = 20;
   position: number = 10;
   weapons: IWeapon[] = [];
   item?: IItem;
@@ -63,7 +63,7 @@ export class Cleric implements ICharacter{
 }
 
 export class Mage implements ICharacter {
-  health: number = 5;
+  health: number = 20;
   position: number = 10;
   weapons: IWeapon[] = [];
   item?: IItem;
@@ -116,7 +116,7 @@ export class Thief implements ICharacter {
 export class Feet{
   constructor(private character: ICharacter){}
   move(){
-    if (this.character.weapons.some(x => isMeleeWeapon(x))){
+    if (this.character.weapons.some(x => isMeleeWeapon(x) || isRangedWeapon(x) || isEnchantedItem(x) )){
       this.character.position = Math.max(this.character.position - 5, 1);
     }
   }
