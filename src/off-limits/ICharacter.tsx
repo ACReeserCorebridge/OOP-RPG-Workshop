@@ -15,6 +15,7 @@ export interface ICharacter {
     position: number;
     weapons: IWeapon[];
     item?: IItem;
+    avatar: string;
     classname(): CharacterClassName;
     move(): void;
     chooseAction(): ICharacterActionDecision;

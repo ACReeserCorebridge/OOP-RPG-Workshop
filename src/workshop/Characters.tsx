@@ -9,6 +9,8 @@ import {
 
 export class Warrior extends Character {
 
+  avatar = '/assets/Lothar.png'
+
   constructor(public name: string, public key: number) {
     super();
     equip(WarriorStartItem, this);
@@ -21,6 +23,8 @@ export class Warrior extends Character {
 
 export class Cleric extends Character {
 
+  avatar = '/assets/lefou.png'
+
   constructor(public name: string, public key: number) {
     super();
     equip(ClericStartItem, this);
@@ -31,6 +35,8 @@ export class Cleric extends Character {
 }
 
 export class Mage extends Character {
+
+  avatar = '/assets/qareen.png'
 
   constructor(public name: string, public key: number) {
     super();
@@ -43,6 +49,8 @@ export class Mage extends Character {
 }
 
 export class Thief extends Character {
+
+  avatar = '/assets/hynne.png'
 
   constructor(public name: string, public key: number) {
     super();
