@@ -24,10 +24,105 @@ import { IWeapon, IItem, IMeleeWeapon, IRangedWeapon, IConsumableItem, IEnchante
 
 // WEAPON ARMORY
 // todo: add more and better weapons!
-export class Club implements IMeleeWeapon {
-  name = 'Club';
-  damage = 1;
+
+
+export class RareItemEffect implements IEnchantedItem {
+  fireDamage = 5;
+  damage = 6;
+  name = 'Rare Item Effect';
+}
+
+export class LegendItemEffect implements IEnchantedItem {
+  fireDamage = 10;
+  damage = 6;
+  name = 'Legend Item Effect';
+}
+
+export class Tango implements IConsumableItem {
+  healthBonus = 1;
+  name: string = 'Tango';
+}
+
+export class HealingSalve implements IConsumableItem {
+  healthBonus = 2;
+  name: string = 'Healing Salve';
+}
+
+export class EnchantedMango  implements IConsumableItem {
+  healthBonus = 2;
+  name: string = 'Enchanted Mango ';
+}
+
+export class Crystalys implements IMeleeWeapon {
+  name = 'Crystalys';
+  damage = 6;
   meleeRange = 1;
+}
+
+export class DivineRapier implements IMeleeWeapon {
+  name = 'DivineR Rapier';
+  damage = 9;
+  meleeRange = 3
+}
+
+export class AbyssalBlade implements IMeleeWeapon {
+  name = 'Abyssal Blade';
+  damage = 8;
+  meleeRange = 2
+}
+
+export class Mekansm implements IEnchantedItem {
+  fireDamage?: number | undefined;
+  partyHealthBonus?: number | undefined;
+  name: string;
+
+  constructor() {
+    this.fireDamage = 2;
+    this.partyHealthBonus = 10;
+    this.name = 'Mekansm';
+
+  }
+}
+
+export class OctarineCore implements IEnchantedItem {
+  fireDamage?: number | undefined;
+  partyHealthBonus?: number | undefined;
+  name: string;
+
+  constructor() {
+    this.fireDamage = 5;
+    this.partyHealthBonus = 2;
+    this.name = 'Octarine Core';
+
+  }
+}
+
+export class OrchidMalevolence  implements IRangedWeapon<LegendItemEffect> {
+  projectiles: LegendItemEffect[] = [];
+  damage: any;
+  name = 'Orchid Malevolence';
+
+  constructor() {
+    this.projectiles = [
+      new RareItemEffect(),
+      new RareItemEffect(),
+      new RareItemEffect()
+    ];
+  }
+
+}
+
+export class MalevolenceStaff implements IRangedWeapon<LegendItemEffect> {
+  projectiles: LegendItemEffect[] = [];
+  damage: any;
+  name = 'Malevolence Staff';
+
+  constructor() {
+    for (let x = 1; x <= 10; x++) {
+      this.projectiles.push(new LegendItemEffect());
+    }
+  }
+
 }
 
 // ITEM VAULT
@@ -39,18 +134,18 @@ export class UselessAmulet implements IItem {
 
 // ITEM ASSIGNMENTS
 // todo: assign starting items
-export const WarriorStartItem: IItem|undefined = new Club();
-export const ClericStartItem: IItem|undefined = new Club();
-export const MageStartItem: IItem|undefined = undefined;
-export const ThiefStartItem: IItem|undefined = new Club();
+export const WarriorStartItem: IItem | undefined = new Tango();
+export const ClericStartItem: IItem | undefined = new HealingSalve();
+export const MageStartItem: IItem | undefined = new EnchantedMango();
+export const ThiefStartItem: IItem | undefined = new Tango();
 
 // TREASURE ASSIGNMENTS
 // todo: assign treasure from chests
-export function GetItemsInTreasureChests(): IItem[]{
+export function GetItemsInTreasureChests(): IItem[] {
   return [
-    new UselessAmulet(), //this will be found by the warrior
-    new UselessAmulet(), //this will be found by the cleric
-    new UselessAmulet(), //this will be found by the mage
-    new UselessAmulet(), //this will be found by the thief
+    new DivineRapier(), //this will be found by the warrior
+    new OctarineCore(), //this will be found by the cleric
+    new MalevolenceStaff(), //this will be found by the mage
+    new AbyssalBlade(), //this will be found by the thief
   ];
 }
