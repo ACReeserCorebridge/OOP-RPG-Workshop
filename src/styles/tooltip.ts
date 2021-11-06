@@ -26,15 +26,15 @@ export const Tooltip = {
       },
       damage: {
         bg: "red.500",
-        color: "white",
+        color: "gray.100",
       },
       healthy: {
         bg: "green.700",
-        color: "white",
+        color: "gray.100",
       },
       warning: {
-        bg: "yellow.500",
-        color: "white",
+        bg: "yellow.700",
+        color: "gray.100",
       }
     },
     

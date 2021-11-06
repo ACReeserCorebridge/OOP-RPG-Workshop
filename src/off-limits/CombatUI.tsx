@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { AppState } from "..";
 import { Dragon } from "./Dragon";
 import { ICharacter } from "./ICharacter";
@@ -16,14 +16,31 @@ import {
     HStack,
     Stack,
     VStack,
-    Tooltip
+    Tooltip,
+    TableProps,
+    CenterProps
 } from "@chakra-ui/react"
 import { Progress } from "@chakra-ui/react"
 import { CombatAlert } from "./CombatAlert";
+import { motion, useAnimation } from "framer-motion";
+import { CombatPhase } from "./Game";
+
+export interface CharacterRowProps {
+    character: ICharacter;
+    charPos: number;
+    state: AppState;
+}
+export interface CharacterCombatUIProps {
+    character: ICharacter;
+    state: AppState;
+}
+
+export const MotionCharacterRow = motion<CharacterRowProps>(CharacterRow);
 
 export const CombatUI: React.FC<{
     state: AppState;
 }> = (props) => {
+
     return (
         <Flex w="100vw" h="100vh" alignItems="center" justifyContent="center">
             <VStack>
@@ -46,11 +63,12 @@ export const CombatUI: React.FC<{
                         </Thead>
                         <Tbody>
                             {props.state.characters.map((char, i) => (
-                                <CharacterRow
+                                <MotionCharacterRow
                                     key={i}
                                     charPos={char.position}
                                     character={char}
-                                ></CharacterRow>
+                                    state={props.state}
+                                ></MotionCharacterRow>
                             ))}
                         </Tbody>
                     </Table>
@@ -69,14 +87,15 @@ export const CombatUI: React.FC<{
     );
 };
 
-export const CharacterRow: React.FC<{
-    character: ICharacter;
-    charPos: number;
-}> = (props) => {
+export function CharacterRow({
+    character,
+    charPos,
+    state
+}: CharacterRowProps) {
     const cols: Array<{ c?: ICharacter }> = [];
     for (var i = 10; i > 0; i--) {
-        if (i === props.charPos) {
-            cols.push({ c: props.character });
+        if (i === charPos) {
+            cols.push({ c: character });
         } else {
             cols.push({});
         }
@@ -87,9 +106,12 @@ export const CharacterRow: React.FC<{
                 return (
                     <Td key={i}>
                         {c.c ? (
-                            <CharacterCombatUI
-                                character={props.character}
-                            ></CharacterCombatUI>
+                            <motion.div layout>
+                                <CharacterCombatUI
+                                    character={character}
+                                    state={state}
+                                ></CharacterCombatUI>
+                            </motion.div>
                         ) : null}
                     </Td>
                 );
@@ -98,28 +120,43 @@ export const CharacterRow: React.FC<{
     );
 };
 
-export const CharacterCombatUI: React.FC<{
-    character: ICharacter;
-}> = (props) => {
 
-    const hpClass = props.character.health <= 1 ? 'red' : props.character.health < 5 ? 'yellow' : 'green'
-    const damageVariant = props.character.health <= 1 ? 'damage' : props.character.health < 5 ? 'warning' : 'healthy'
+export const MotionCenter = motion<CenterProps>(Center);
+
+export function CharacterCombatUI({ character, state }: CharacterCombatUIProps) {
+
+    const hpClass = character.health <= 1 ? 'red' : character.health < 5 ? 'yellow' : 'green'
+    const damageVariant = character.health <= 1 ? 'damage' : character.health < 5 ? 'warning' : 'healthy'
+    const controls = useAnimation()
+
+    useEffect(() => {
+        const currentChar = state.characters[state.currentCharacter]
+        if (state.currentCombatPhase === CombatPhase.attack 
+            && character.name === currentChar.name) {
+            controls.start({
+                x: [0, 100, 0],
+                transition: { duration: 1 },
+            })
+        }
+        else {
+            controls.stop();
+        }
+    }, [state.currentCharacter, state.currentCombatPhase, character.name]);
 
     return (
-        <Center>
+        <MotionCenter layout={true} animate={controls}>
             <Tooltip variant={damageVariant}
-                label={`${props.character.health} HP`}
+                label={`${character.health} HP`}
                 placement="top" >
                 <Stack>
                     <Progress
-                        value={props.character.health}
-                        max={props.character.health > 5 ? props.character.health : 5}
+                        value={character.health}
+                        max={character.health > 5 ? character.health : 5}
                         colorScheme={hpClass} />
-                    <Image src={props.character.getASCIIStatus()} alt="" style={{ maxWidth: "3rem" }} />
-                    <Text>{props.character.name}</Text>
+                    <Image src={character.getASCIIStatus()} alt="" style={{ maxWidth: "3rem" }} />
+                    <Text>{character.name}</Text>
                 </Stack>
             </Tooltip>
-        </Center>
-
+        </MotionCenter>
     );
 };

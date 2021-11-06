@@ -1,5 +1,8 @@
-import { Box, Heading, Image, Progress, Tooltip, useDisclosure } from '@chakra-ui/react';
+import { Box, BoxProps, Heading, Image, Progress, ProgressProps, Tooltip, useDisclosure } from '@chakra-ui/react';
+import { motion, useAnimation } from 'framer-motion';
 import React, { useEffect, useRef, useState } from 'react';
+
+export const MotionBox = motion<BoxProps>(Box);
 
 export const Dragon: React.FC<{
   hp: number;
@@ -8,6 +11,7 @@ export const Dragon: React.FC<{
   const [damageTaken, setDamageTaken] = useState(0);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const previousHp = usePrevious(props.hp);
+  const controls = useAnimation()
 
   function usePrevious(value: number) {
     const ref = useRef<number>();
@@ -24,14 +28,21 @@ export const Dragon: React.FC<{
       if (damage > 0) {
         setDamageTaken(damage);
         onOpen();
+        controls.start({
+          rotate: [0, -10, 10, -10, 10, -10, 10, 0],
+          scale: [1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1],
+          transition: { duration: 0.5, ease: "easeInOut" },
+        });
       }
     }
   }, [props.hp]);
 
+  
+
   const hpColor = props.hp <= 20 ? 'red' : props.hp < 60 ? 'yellow' : 'green'
   const hpVariant = props.hp <= 20 ? 'damage' : props.hp < 60 ? 'warning' : 'healthy'
   return (
-    <Box>
+    <MotionBox animate={controls}>
       <Tooltip variant={hpVariant}
         label={`${props.hp} HP`}
         placement="top-start">
@@ -39,13 +50,13 @@ export const Dragon: React.FC<{
           <Heading size="md">BOSS DRAGON</Heading>
           <Progress hasStripe isAnimated
             value={props.hp < 0 ? 0 : props.hp}
-            colorScheme={hpColor} />
+            colorScheme={hpColor}/>
         </Box>
       </Tooltip>
       <Box>
         <Tooltip
           variant="damage"
-          label={`Took [ ${damageTaken} ] of damage`}
+          label={`Took [ ${damageTaken} ] dmg`}
           openDelay={200}
           closeDelay={50}
           onClose={onClose}
@@ -57,6 +68,6 @@ export const Dragon: React.FC<{
             alt="Dragon" />
         </Tooltip>
       </Box>
-    </Box>
+    </MotionBox>
   );
 };
