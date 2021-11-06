@@ -30,26 +30,43 @@ export class Club implements IMeleeWeapon {
   meleeRange = 1;
 }
 
+export class Bonk implements IMeleeWeapon {
+  name = 'Bonk';
+  damage = 9;
+  meleeRange = 2;
+}
+
+export class SuperBonk implements IRangedWeapon<Club> {
+  name = 'Super Bonk';
+  damage: 0 = 0;
+  projectiles: Bonk[] = [new Bonk, new Bonk, new Bonk, new Bonk, new Bonk, new Bonk, new Bonk, new Bonk, new Bonk, new Bonk];
+}
+
 // ITEM VAULT
 // todo: add more and better items!
 export class UselessAmulet implements IItem {
   name = 'Useless Amulet';
 }
+export class PowerAmulet implements IEnchantedItem {
+  name = 'Ice Cream';
+  fireDamage = 3;
+  partyHealthBonus = 4;
+}
 
 
 // ITEM ASSIGNMENTS
 // todo: assign starting items
-export const WarriorStartItem: IItem|undefined = new Club();
-export const ClericStartItem: IItem|undefined = new Club();
-export const MageStartItem: IItem|undefined = undefined;
-export const ThiefStartItem: IItem|undefined = new Club();
+export const WarriorStartItem: IItem|undefined = new Bonk();
+export const ClericStartItem: IItem|undefined = new Bonk();
+export const MageStartItem: IItem|undefined = new SuperBonk();
+export const ThiefStartItem: IItem|undefined = new Bonk();
 
 // TREASURE ASSIGNMENTS
 // todo: assign treasure from chests
 export function GetItemsInTreasureChests(): IItem[]{
   return [
     new UselessAmulet(), //this will be found by the warrior
-    new UselessAmulet(), //this will be found by the cleric
+    new PowerAmulet(), //this will be found by the cleric
     new UselessAmulet(), //this will be found by the mage
     new UselessAmulet(), //this will be found by the thief
   ];
