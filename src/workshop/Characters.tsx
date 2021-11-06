@@ -54,7 +54,7 @@ export class Cleric implements ICharacter{
   }
   chooseAction(): ICharacterActionDecision {
     return {
-      attack: this.weapons[0]
+      use: this.item!
     }
   }
   getASCIIStatus(): string {
