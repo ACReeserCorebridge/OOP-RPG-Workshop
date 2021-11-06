@@ -10,15 +10,16 @@ import {
     Tr,
     Td,
     Image,
-    Text, 
-    Box, 
-    Center, 
-    Flex, 
-    HStack, 
-    Stack, 
-    VStack
+    Text,
+    Center,
+    Flex,
+    HStack,
+    Stack,
+    VStack,
+    Tooltip
 } from "@chakra-ui/react"
 import { Progress } from "@chakra-ui/react"
+import { CombatAlert } from "./CombatAlert";
 
 export const CombatUI: React.FC<{
     state: AppState;
@@ -55,10 +56,10 @@ export const CombatUI: React.FC<{
                     </Table>
                     <Dragon hp={props.state.dragonHP} />
                     {props.state.characters.every((x) => x.health < 1) ? (
-                        <div className="gameover">GAME OVER</div>
+                        <CombatAlert message="You have been defeated!" isVictory={false} />
                     ) : null}
                     {props.state.dragonHP <= 0 ? (
-                        <div className="winner">VICTORY!</div>
+                        <CombatAlert message="You have defeated the dragon!" isVictory={true} />
                     ) : null}
                 </HStack>
                 <LogUI log={props.state.log}></LogUI>
@@ -100,18 +101,24 @@ export const CharacterRow: React.FC<{
 export const CharacterCombatUI: React.FC<{
     character: ICharacter;
 }> = (props) => {
-    const isDead = props.character.health <= 0;
+
     const hpClass = props.character.health <= 1 ? 'red' : props.character.health < 5 ? 'yellow' : 'green'
+    const damageVariant = props.character.health <= 1 ? 'damage' : props.character.health < 5 ? 'warning' : 'healthy'
+
     return (
         <Center>
-            <Stack>
-                <Progress
-                    value={props.character.health}
-                    max={5}
-                    colorScheme={hpClass} />
-                <Image src={props.character.getASCIIStatus()} alt="" style={{ maxWidth: "3rem" }} />
-                <Text>{props.character.name}</Text>
-            </Stack>
+            <Tooltip variant={damageVariant}
+                label={`${props.character.health} HP`}
+                placement="top" >
+                <Stack>
+                    <Progress
+                        value={props.character.health}
+                        max={props.character.health > 5 ? props.character.health : 5}
+                        colorScheme={hpClass} />
+                    <Image src={props.character.getASCIIStatus()} alt="" style={{ maxWidth: "3rem" }} />
+                    <Text>{props.character.name}</Text>
+                </Stack>
+            </Tooltip>
         </Center>
 
     );

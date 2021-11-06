@@ -1,7 +1,12 @@
 import { extendTheme } from '@chakra-ui/react';
-
+import { Button } from './button';
+import { Tooltip } from './tooltip';
 
 export const theme = extendTheme({
+    components: {
+        Button,
+        Tooltip
+    },
     colors: {
         gray: {
             "900": "#181B23",
