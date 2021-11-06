@@ -41,7 +41,7 @@ export const LootUI: React.FC<{
                                     {
                                         props.state.chests[i].opened ?
                                             props.state.chests[i].item.image ?
-                                                <ScaleFade initialScale={0.9} in={props.state.chests[i].opened}>
+                                                <ScaleFade initialScale={0.2}  in={props.state.chests[i].opened}>
                                                     <Box maxW="sm" overflow="hidden">
                                                         <Box alignItems="center">
                                                             <Image boxSize="100px" src={props.state.chests[i].item.image}></Image>
