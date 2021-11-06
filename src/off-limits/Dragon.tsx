@@ -1,34 +1,73 @@
-import React from 'react';
+import { Box, BoxProps, Heading, Image, Progress, ProgressProps, Tooltip, useDisclosure } from '@chakra-ui/react';
+import { motion, useAnimation } from 'framer-motion';
+import React, { useEffect, useRef, useState } from 'react';
+
+export const MotionBox = motion<BoxProps>(Box);
 
 export const Dragon: React.FC<{
   hp: number;
 }> = (props) => {
-  let hpString = 'HP: [';
-  for (var i = 1; i < 21; i++) {
-    if (props.hp >= i * 5) hpString += '█';
-    else hpString += ' ';
+
+  const [damageTaken, setDamageTaken] = useState(0);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const previousHp = usePrevious(props.hp);
+  const controls = useAnimation()
+
+  function usePrevious(value: number) {
+    const ref = useRef<number>();
+    useEffect(() => {
+      ref.current = value;
+    }, [props.hp]);
+    return ref.current;
   }
-  hpString += '] (' + props.hp + ')';
+
+  useEffect(() => {
+    if (previousHp) {
+      console.log(previousHp);
+      const damage = previousHp - props.hp;
+      if (damage > 0) {
+        setDamageTaken(damage);
+        onOpen();
+        controls.start({
+          rotate: [0, -10, 10, -10, 10, -10, 10, 0],
+          scale: [1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1],
+          transition: { duration: 0.5, ease: "easeInOut" },
+        });
+      }
+    }
+  }, [props.hp]);
+
+  
+
+  const hpColor = props.hp <= 20 ? 'red' : props.hp < 60 ? 'yellow' : 'green'
+  const hpVariant = props.hp <= 20 ? 'damage' : props.hp < 60 ? 'warning' : 'healthy'
   return (
-    <div className="dragon ascii">
-      <div>BOSS DRAGON</div>
-      <div className="hp">{hpString}</div>
-      <div> </div>
-      {' _/=======() \n' +
-        '(/___   /|\\          ()==========__\n' +
-        '      _/ | \\        //|   ______/ )\n' +
-        '        _|  \\      // | _/\n' +
-        '          |/|_   //  //\n' +
-        '           (oo) _//  /\n' +
-        '          //_/_/ /  |\n' +
-        '         @@/  |=    |\n' +
-        '              _=_  |\n' +
-        '                == |_ snd\n' +
-        '             __(===(  )\\\n' +
-        '            (((~) __(_/   |\n' +
-        '                 (((~)   /\n' +
-        '                 ______/ /\n' +
-        'Art by Shanaka Dias'}
-    </div>
+    <MotionBox animate={controls}>
+      <Tooltip variant={hpVariant}
+        label={`${props.hp} HP`}
+        placement="top-start">
+        <Box>
+          <Heading size="md">BOSS DRAGON</Heading>
+          <Progress hasStripe isAnimated
+            value={props.hp < 0 ? 0 : props.hp}
+            colorScheme={hpColor}/>
+        </Box>
+      </Tooltip>
+      <Box>
+        <Tooltip
+          variant="damage"
+          label={`Took [ ${damageTaken} ] dmg`}
+          openDelay={200}
+          closeDelay={50}
+          onClose={onClose}
+          isOpen={isOpen}>
+         <Image
+            boxSize="auto"
+            src="/assets/dragon.png"
+            objectFit="contain"
+            alt="Dragon" />
+        </Tooltip>
+      </Box>
+    </MotionBox>
   );
 };

@@ -5,6 +5,7 @@ export const MaximumMeleeWeaponRange = 2;
 export const MaximumConsumableHealthBonus = 4;
 export interface IItem {
   name: string;
+  image?: string;
 }
 export interface IWeapon extends IItem {
   damage: number;

@@ -1,19 +1,21 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
+import { ChakraProvider, ScaleFade, useDisclosure } from "@chakra-ui/react"
 import { Cleric, Mage, Thief, Warrior } from './workshop/Characters';
-import {  GameTick, CombatPhase } from './off-limits/Game';
-import './style.css';
+import { GameTick, CombatPhase } from './off-limits/Game';
 import { CombatUI } from './off-limits/CombatUI';
 import { LootUI } from './off-limits/LootUI';
 import { MenuUI } from './off-limits/MenuUI';
 import { equip, ICharacter } from './off-limits/ICharacter';
 import { GetItemsInTreasureChests } from './workshop/Weapons';
 import { IItem } from './off-limits/IWeapons';
+import { theme } from './styles/theme';
+import { AnimatePresence } from 'framer-motion';
 
-interface AppProps {}
+interface AppProps { }
 export interface AppState {
   characters: ICharacter[];
-  chests: Array<{item: IItem, opened: boolean}>,
+  chests: Array<{ item: IItem, opened: boolean }>,
   dragonHP: number;
   currentCharacter: number;
   currentCombatPhase: CombatPhase;
@@ -22,7 +24,7 @@ export interface AppState {
   view: 'menu' | 'loot' | 'fight';
 }
 
-function getNewGameState(): AppState{
+function getNewGameState(): AppState {
   return {
     characters: [
       new Warrior('Conan', 1),
@@ -30,16 +32,15 @@ function getNewGameState(): AppState{
       new Mage('Merlin', 3),
       new Thief('Bilbo', 4)
     ],
-    chests: GetItemsInTreasureChests().map(x => {return {item: x, opened: false}}),
+    chests: GetItemsInTreasureChests().map(x => { return { item: x, opened: false } }),
     dragonHP: 100,
     currentCharacter: 0,
     currentCombatPhase: CombatPhase.move,
     lootStep: 0,
-    log: ['Game Start','-','-','-'],
+    log: ['Game Start', '-', '-', '-'],
     view: 'menu',
   }
 };
-
 class App extends Component<AppProps, AppState> {
   constructor(props: AppProps) {
     super(props);
@@ -60,31 +61,46 @@ class App extends Component<AppProps, AppState> {
     }
   }
 
+
+
   render() {
     switch (this.state.view) {
       default:
-        return <MenuUI state={this.state} start={() => this.setState({view: 'loot'})}></MenuUI>;
+        return <MenuUI state={this.state} start={() => this.setState({ view: 'loot' })}></MenuUI>;
       case 'loot':
-        return <LootUI state={this.state} start={() => this.setState({
-          log: ['Combat Start', this.state.log[0], this.state.log[1], this.state.log[2]],
-          view: 'fight'
-        })} loot={(i: number) => {
-          const newChests = this.state.chests.slice();
-          newChests[i].opened = true;
-          const chars = this.state.characters.slice();
-          const log = equip(newChests[i].item, chars[i]);
-          this.setState({
-            chests: newChests,
-            characters: chars,
-            log: [log, this.state.log[0], this.state.log[1], this.state.log[2]]
-          });
-        }}></LootUI>;
+        return (
+          <AnimatePresence>
+            <ScaleFade initialScale={0.7} in={this.state.view === 'loot'}
+              exit={{ opacity: 0, scale: 0.2, transition: { duration: 0.5 } }}>
+              <LootUI state={this.state} start={() => this.setState({
+                log: ['Combat Start', this.state.log[0], this.state.log[1], this.state.log[2]],
+                view: 'fight'
+              })} loot={(i: number) => {
+                const newChests = this.state.chests.slice();
+                newChests[i].opened = true;
+                const chars = this.state.characters.slice();
+                const log = equip(newChests[i].item, chars[i]);
+                this.setState({
+                  chests: newChests,
+                  characters: chars,
+                  log: [log, this.state.log[0], this.state.log[1], this.state.log[2]]
+                });
+              }}></LootUI>;
+            </ScaleFade>
+          </AnimatePresence>
+        );
       case 'fight':
-        return <CombatUI state={this.state}></CombatUI>;
+        return (
+          <ScaleFade initialScale={0.2} in={this.state.view === 'fight'}>
+            <CombatUI state={this.state}></CombatUI>
+          </ScaleFade>)
     }
   }
 }
 
 
 
-render(<App />, document.getElementById('root'));
+render(<ChakraProvider theme={theme}>
+  <App />
+</ChakraProvider>,
+  document.getElementById('root'));

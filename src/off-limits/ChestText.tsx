@@ -1,13 +1,10 @@
 import React from "react";
+import { Box, Image } from '@chakra-ui/react'
 
 export const ChestText: React.FC = () => {
-    return (
-      <span className="ascii">
-        {' ______ ___\n' +
-          '//    //  \\\\\n' +
-          '#=====##===#\n' +
-          '| [8] ||   |\n' +
-          '|_____||___|\n'+'\n'}
-      </span>
-    );
-  };
+  return (
+    <Box> 
+      <Image boxSize="100px" src="/assets/chest.png" objectFit="cover" alt="Chest" />
+    </Box>
+  );
+};

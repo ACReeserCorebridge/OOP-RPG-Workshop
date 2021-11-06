@@ -1,7 +1,10 @@
+import { Box, Button, Flex, Heading, HStack, VStack, Text, Image, Center } from "@chakra-ui/react";
 import React, { useEffect } from "react";
 import { AppState } from "..";
 import { ChestText } from "./ChestText";
+import { HeroBadge } from "./HeroBadge";
 import { LogUI } from "./LogUI";
+import { ScaleFade } from "@chakra-ui/react"
 
 export const LootUI: React.FC<{
     state: AppState;
@@ -12,7 +15,7 @@ export const LootUI: React.FC<{
         const tID = setInterval(() => {
             for (let i = 0; i < props.state.chests.length; i++) {
                 const chest = props.state.chests[i];
-                if (chest.opened){
+                if (chest.opened) {
                     continue;
                 } else {
                     props.loot(i);
@@ -25,41 +28,53 @@ export const LootUI: React.FC<{
     });
     const anyClosed = props.state.chests.some(x => !x.opened);
     return (
-        <div>
-            <div className="game">
-                <table className="grid wide">
-                    <tbody>
-                        <tr>
-                            <td colSpan={3}>Your party finds 4 treasure chests</td>
-                        </tr>
+        <>
+            <Flex w="100vw" h="100vh" alignItems="center" justifyContent="center">
+
+                <VStack spacing={16}>
+                    <Heading size="md" >Your party finds 4 treasure chests</Heading>
+                    <HStack spacing={8}>
                         {props.state.characters.map((x, i) => (
-                            <tr key={i}>
-                                <td>
-                                    {x.name} the {x.classname()} finds
-                                </td>
-                                {
-                                    props.state.chests[i].opened ? <td className="loot-chest">
-                                        {props.state.chests[i].item.name}
-                                    </td> : <td className="loot-chest">
-                                        <ChestText></ChestText>
-                                        <button onClick={() => props.loot(i)} className="smaller">
-                                            LOOT
-                                        </button>
-                                    </td>
-                                }
-                            </tr>
+                            <Box key={i}>
+                                <Center>
+                                    <HeroBadge name={x.name} avatar={x.avatar} heroClass={x.classname()} />
+                                    {
+                                        props.state.chests[i].opened ?
+                                            props.state.chests[i].item.image ?
+                                                <ScaleFade initialScale={0.2}  in={props.state.chests[i].opened}>
+                                                    <Box maxW="sm" overflow="hidden">
+                                                        <Box alignItems="center">
+                                                            <Image boxSize="100px" src={props.state.chests[i].item.image}></Image>
+                                                            <Box letterSpacing="wide"
+                                                                display="flex"
+                                                                alignItems="baseline"
+                                                                color="gray.200"
+                                                                fontWeight="semibold"
+                                                                mt="4">
+                                                                {props.state.chests[i].item.name}
+                                                            </Box>
+                                                        </Box>
+                                                    </Box>
+                                                </ScaleFade>
+                                                : <Text> {props.state.chests[i].item.name}</Text >
+                                            :
+                                            <VStack >
+                                                <ChestText></ChestText>
+                                                <Button onClick={() => props.loot(i)} className="smaller">
+                                                    LOOT
+                                                </Button>
+                                            </VStack>
+                                    }
+                                </Center>
+                            </Box>
                         ))}
-                        <tr>
-                            <td colSpan={2}>
-                                <button role="button" onClick={() => props.start()} disabled={anyClosed}>
-                                    ASSAULT BOSS DRAGON
-                                </button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <LogUI log={props.state.log}></LogUI>
-        </div>
+                    </HStack>
+                    <Button onClick={() => props.start()} disabled={anyClosed}>
+                        ASSAULT BOSS DRAGON
+                    </Button>
+                    <LogUI log={props.state.log}></LogUI>
+                </VStack>
+            </Flex>
+        </>
     );
 };
