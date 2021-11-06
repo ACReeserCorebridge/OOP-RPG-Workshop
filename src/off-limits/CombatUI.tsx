@@ -8,24 +8,10 @@ export const CombatUI: React.FC<{
     state: AppState;
 }> = (props) => {
     return (
-        <div>
-            <div className="game">
-                <table className="grid">
-                    <thead>
-                        <tr>
-                            <td>50ft</td>
-                            <td>45</td>
-                            <td>40</td>
-                            <td>35</td>
-                            <td>30</td>
-                            <td>25</td>
-                            <td>20</td>
-                            <td>15</td>
-                            <td>10</td>
-                            <td>5ft</td>
-                        </tr>
-                    </thead>
-                    <tbody>
+        <div className="game-container">
+            <div className="game" style={{backgroundImage: "url(assets/images/background.png)"}}>
+                <table className="game-field">
+                    <tbody className="field">
                         {props.state.characters.map((char, i) => (
                             <CharacterRow
                                 key={i}
@@ -83,11 +69,14 @@ export const CharacterCombatUI: React.FC<{
     const isDead = props.character.health <= 0;
     const hpClass = props.character.health <= 1 ? 'red' : props.character.health < 5 ? 'yellow': ''
     return (
-        <span className={isDead? 'red': ''}>
-            <span className="block">
-                {props.character.getASCIIStatus()}
-                </span>
-            <span className={"block "+hpClass}>[{props.character?.health}]</span>
+        <span className={isDead? 'player red': 'player'}>
+            <img src={props.character.getASCIIStatus()} alt="" />
+            {/* <span className={"block "+hpClass}>[{props.character?.health}]</span> */}
+            <div className="player-healthbar">
+                <div className="player-hp" style={{width: props.character.health*10+'px', backgroundColor: hpClass}}>
+
+                </div>
+            </div>
         </span>
     );
 };

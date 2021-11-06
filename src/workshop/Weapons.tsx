@@ -65,11 +65,13 @@ export class Staff implements IRangedWeapon<MagicBolt> {
 
 export class HolyAmulet implements IEnchantedItem {
   name = 'Holy Amulet';
+  image = 'assets/images/amulet.png'
   partyHealthBonus = 4;
 }
 
 export class HealthPotion implements IConsumableItem {
   name = 'Health Potion';
+  image = 'assets/images/health_potion.png'
   healthBonus = 3
 }
 

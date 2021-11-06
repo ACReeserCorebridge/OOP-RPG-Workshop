@@ -25,7 +25,7 @@ export const LootUI: React.FC<{
     });
     const anyClosed = props.state.chests.some(x => !x.opened);
     return (
-        <div>
+        <div className="game-container">
             <div className="game">
                 <table className="grid wide">
                     <tbody>
@@ -35,12 +35,16 @@ export const LootUI: React.FC<{
                         {props.state.characters.map((x, i) => (
                             <tr key={i}>
                                 <td>
-                                    {x.name} the {x.classname()} finds
+                                    <img src={'assets/images/chest_'+x.classname().toLowerCase()+'.png'} alt="" />
                                 </td>
                                 {
-                                    props.state.chests[i].opened ? <td className="loot-chest">
-                                        {props.state.chests[i].item.name}
-                                    </td> : <td className="loot-chest">
+                                    props.state.chests[i].opened ? 
+                                    <td className="loot-chest">
+                                        <img src={props.state.chests[i].item.image} alt="" />
+                                        <p>{props.state.chests[i].item.name}</p>
+                                    </td> 
+                                    : 
+                                    <td className="loot-chest">
                                         <ChestText></ChestText>
                                         <button onClick={() => props.loot(i)} className="smaller">
                                             LOOT

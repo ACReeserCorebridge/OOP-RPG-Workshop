@@ -14,28 +14,24 @@ import {
 
 export class Warrior extends Character {
   constructor(public name: string, public key: number) {
-    super();
-    equip(WarriorStartItem, this);
+    super(name, key, 'Warrior', WarriorStartItem);
   }
 }
 
 export class Cleric extends Character{
   constructor(public name: string, public key: number) {
-    super();
-    equip(ClericStartItem, this);
+    super(name, key, 'Cleric', ClericStartItem);
   }
 }
 
 export class Mage extends Character {
   constructor(public name: string, public key: number) {
-    super();
-    equip(MageStartItem, this);
+    super(name, key, 'Mage', MageStartItem);
   }
 }
 
 export class Thief extends Character {
   constructor(public name: string, public key: number) {
-    super();
-    equip(ThiefStartItem, this);
+    super(name, key, 'Thief', ThiefStartItem);
   }
 }

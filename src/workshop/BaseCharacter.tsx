@@ -9,18 +9,20 @@ export class Character implements ICharacter {
     position: number = 10;
     weapons: IWeapon[] = [];
     item?: IItem;
+    class: CharacterClassName = 'Warrior';
+    image: string = '';
+    deadImage: string = '';
+
+    constructor(public _name: string, public _key: number, _class: CharacterClassName, public _item?: IItem){
+        this.name = _name;
+        this.class = _class;
+        this.image = `assets/images/${this.class.toLowerCase()}.png`
+        this.deadImage = `assets/images/${this.class.toLowerCase()}_dead.png`
+        equip(_item, this);
+    }
     
     classname(): CharacterClassName {
-        switch(this.weapons[0]){
-            case ThiefStartItem:
-                return 'Thief';
-            case ClericStartItem:
-                return 'Cleric';
-            case MageStartItem:
-                return 'Mage';
-            default:
-                return 'Warrior'
-        }
+        return this.class;
     }
     move(){
         if (this.weapons.some(x => isMeleeWeapon(x))){
@@ -39,9 +41,9 @@ export class Character implements ICharacter {
     }
     getASCIIStatus(): string {
         if(this.health <= 0){
-            return `X`;
+            return this.deadImage;
         }else{
-            return `${this.name} (${this.classname()})`;
+            return this.image;
         }
     }
 }
