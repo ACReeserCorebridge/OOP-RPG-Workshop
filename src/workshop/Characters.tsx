@@ -32,8 +32,9 @@ export class Hero implements Character{
     }
   }
   getASCIIStatus(): string {
-      return this.health <= 0 ? "X"  : "@";
+    return this.health <= 0 ? "X"  : "@";
   }
+
 }
 
 export class Warrior extends Hero {
@@ -44,7 +45,9 @@ export class Warrior extends Hero {
     super(name, key);
     equip(WarriorStartItem, this);
   }
-  
+  getASCIIStatus(): string {
+    return this.health <= 0 ? "X~"  : "@";
+  }
 }
 
 export class Cleric extends Hero{
@@ -64,6 +67,9 @@ export class Cleric extends Hero{
       return {
         use: this.weapons[0]
       }
+  }
+  getASCIIStatus(): string {
+    return this.health <= 0 ? "X!"  : "@";
   }
 }
 
@@ -85,6 +91,9 @@ export class Mage extends Hero {
         use: this.weapons[0]
       }
   }
+  getASCIIStatus(): string {
+    return this.health <= 0 ? "X@"  : "@";
+  }
 }
 
 export class Thief extends Hero {
@@ -94,6 +103,9 @@ export class Thief extends Hero {
   constructor(public name: string, public key: number) {
     super(name, key);
     equip(ThiefStartItem, this);
+  }
+  getASCIIStatus(): string {
+    return this.health <= 0 ? "X#"  : "@";
   }
 }
 
