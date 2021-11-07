@@ -70,11 +70,20 @@ export class HealthPotion implements IConsumableItem {
   
 }
 
+export class WizardStaff implements IEnchantedItem {
+  name = 'Wizard Staff';
+  fireDamage = MaximumFireDamage;
+}
+
+export class HealingRod implements IEnchantedItem {
+  name = 'Healing Rod';
+  partyHealthBonus = MaximumConsumableHealthBonus;
+}
 
 // ITEM ASSIGNMENTS
 // todo: assign starting items
 export const WarriorStartItem: IItem|undefined = new SteelSword();
-export const ClericStartItem: IItem|undefined = new HeavyMace();
+export const ClericStartItem: IItem|undefined = new HealingRod();
 export const MageStartItem: IItem|undefined = undefined;
 export const ThiefStartItem: IItem|undefined = new SilverBow();
 
@@ -83,8 +92,8 @@ export const ThiefStartItem: IItem|undefined = new SilverBow();
 export function GetItemsInTreasureChests(): IItem[]{
   return [
     new HealthPotion(), //this will be found by the warrior
-    new HealthPotion(), //this will be found by the cleric
-    new HealthPotion(), //this will be found by the mage
+    new HealingRod(), //this will be found by the cleric
+    new WizardStaff(), //this will be found by the mage
     new HealthPotion(), //this will be found by the thief
   ];
 }
