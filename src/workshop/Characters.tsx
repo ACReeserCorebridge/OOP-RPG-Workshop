@@ -1,5 +1,5 @@
-import { ICharacter, CharacterClassName, equip, ICharacterActionDecision } from '../off-limits/ICharacter';
-import { IWeapon, IItem, isMeleeWeapon } from '../off-limits/IWeapons';
+import { CharacterClassName, equip, ICharacterActionDecision } from '../off-limits/ICharacter';
+import { IWeapon, IItem, isRangedWeapon } from '../off-limits/IWeapons';
 import { Character } from './BaseCharacter';
 import {
   ClericStartItem,
@@ -8,116 +8,140 @@ import {
   WarriorStartItem,
 } from './Weapons';
 
-//todo: too many duplicate classes in this file! 
-//todo: customize the chooseAction() to better fight the dragon
-//todo: update the `getASCIIStatus` function(s) to return X when dead and a unique character per class
-
-export class Warrior implements ICharacter {
+export class Warrior extends Character {
   health: number = 5;
   position: number = 10;
   weapons: IWeapon[] = [];
   item?: IItem;
-  feet = new Feet(this);
+
   classname(): CharacterClassName {
     return 'Warrior';
   }
-  move(){
-    this.feet.move();
-  }
+
   constructor(public name: string, public key: number) {
+    super(name, key);
     equip(WarriorStartItem, this);
   }
+
   chooseAction(): ICharacterActionDecision {
-    return {
-      attack: this.weapons[0]
+    if (this.health == 1 && this.item) {
+      return {
+        use: this.item
+      }
+    } else {
+      return {
+        attack: this.weapons[0]
+      }
     }
   }
+
   getASCIIStatus(): string {
-      return "@";
+    if (this.health) {
+      return "W";
+    } else {
+      return super.getASCIIStatus();
+    }
   }
 }
 
-export class Cleric implements ICharacter{
+export class Cleric extends Character {
   health: number = 5;
   position: number = 10;
   weapons: IWeapon[] = [];
   item?: IItem;
-  feet = new Feet(this);
+
   classname(): CharacterClassName {
     return 'Cleric';
   }
-  move(){
-    this.feet.move();
-  }
+
   constructor(public name: string, public key: number) {
+    super(name, key);
     equip(ClericStartItem, this);
   }
+
   chooseAction(): ICharacterActionDecision {
-    return {
-      attack: this.weapons[0]
+    if (this.health <= 2 && this.item) {
+      return {
+        use: this.item
+      }
+    } else {
+      return {
+        attack: this.weapons[0]
+      }
     }
   }
+
   getASCIIStatus(): string {
-      return "@";
+    if (this.health) {
+      return "C";
+    } else {
+      return super.getASCIIStatus();
+    }
   }
 }
 
-export class Mage implements ICharacter {
+export class Mage extends Character {
   health: number = 5;
   position: number = 10;
   weapons: IWeapon[] = [];
   item?: IItem;
-  feet = new Feet(this);
+
   classname(): CharacterClassName {
     return 'Mage';
   }
+
   constructor(public name: string, public key: number) {
+    super(name, key);
     equip(MageStartItem, this);
   }
-  move(){
-    this.feet.move();
-  }
+
   chooseAction(): ICharacterActionDecision {
-    return {
-      attack: this.weapons[0]
+    if (this.item && isRangedWeapon(this.weapons[0]) && this.weapons[0].projectiles.length == 0) {
+      return {
+        use: this.item
+      }
+    } else {
+      return {
+        attack: this.weapons[0]
+      }
     }
   }
+
   getASCIIStatus(): string {
-      return "@";
+    if (this.health) {
+      return "M";
+    } else {
+      return super.getASCIIStatus();
+    }
   }
 }
 
-export class Thief implements ICharacter {
+export class Thief extends Character {
   health: number = 5;
   position: number = 10;
   weapons: IWeapon[] = [];
   item?: IItem;
-  feet = new Feet(this);
-  move(){
-    this.feet.move();
-  }
+
   classname(): CharacterClassName {
     return 'Thief';
   }
+
   constructor(public name: string, public key: number) {
+    super(name, key);
     equip(ThiefStartItem, this);
   }
+
   chooseAction(): ICharacterActionDecision {
     return {
       attack: this.weapons[0]
     }
   }
-  getASCIIStatus(): string {
-      return "@";
-  }
-}
 
-//todo: something about this class is code smell...
-export class Feet{
-  constructor(private character: ICharacter){}
-  move(){
-    if (this.character.weapons.some(x => isMeleeWeapon(x))){
-      this.character.position = Math.max(this.character.position - 5, 1);
+  getASCIIStatus(): string {
+    if (this.health) {
+      return "T";
+    } else {
+      return super.getASCIIStatus();
     }
   }
 }
