@@ -13,7 +13,7 @@ export interface IMeleeWeapon extends IWeapon {
   meleeRange: number;
 }
 export interface IRangedWeapon<T extends IWeapon> {
-  damage: 0;
+  damage: number;
   projectiles: T[];
 }
 export interface IEnchantedItem extends IItem {
