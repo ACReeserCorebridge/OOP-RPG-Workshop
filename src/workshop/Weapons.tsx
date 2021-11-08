@@ -23,34 +23,81 @@ import { IWeapon, IItem, IMeleeWeapon, IRangedWeapon, IConsumableItem, IEnchante
 // }
 
 // WEAPON ARMORY
-// todo: add more and better weapons!
 export class Club implements IMeleeWeapon {
   name = 'Club';
   damage = 1;
   meleeRange = 1;
 }
 
+export class GreatSword implements IMeleeWeapon {
+  name = 'Great Sword';
+  damage = 5;
+  meleeRange = 2;
+}
+
+export class RustyKnife implements IMeleeWeapon {
+  name = 'Rust Knife';
+  damage = 2;
+  meleeRange = 1;
+}
+
+export class HolySword implements IMeleeWeapon {
+  name = 'Holy Sword';
+  damage = 5;
+  meleeRange = 1;
+}
+export class ArcaneBolt implements IWeapon {
+  name = "Arcane bolt";
+  damage = 3;
+}
+export class MagicStaff implements IRangedWeapon<ArcaneBolt> {
+  name = "Magic Staff";
+  damage = 2 as 0;
+  projectiles = [new ArcaneBolt(), new ArcaneBolt(), new ArcaneBolt(), new ArcaneBolt(), new ArcaneBolt()];
+}
+
+export class Ammo implements IWeapon {
+  name = ".270 caliber bullet";
+  damage = 2;
+}
+
+export class Rifle implements IRangedWeapon<IWeapon> {
+  name = "Rifle";
+  damage = 1 as 0;
+  projectiles = [new Ammo(), new Ammo(), new Ammo(), new Ammo(), new Ammo()];
+}
+
 // ITEM VAULT
-// todo: add more and better items!
 export class UselessAmulet implements IItem {
   name = 'Useless Amulet';
 }
 
+export class HealingPotion implements IConsumableItem {
+  name = 'Healing Potion';
+  healthBonus = 2;
+}
+
+export class HolyLocket implements IEnchantedItem {
+    name = "Holy Locket";
+    partyHealthBonus = 2;
+}
+export class FireGrimoire implements IEnchantedItem {
+    name = "Fire Grimoire";
+    fireDamage = 2;
+}
 
 // ITEM ASSIGNMENTS
-// todo: assign starting items
-export const WarriorStartItem: IItem|undefined = new Club();
-export const ClericStartItem: IItem|undefined = new Club();
-export const MageStartItem: IItem|undefined = undefined;
-export const ThiefStartItem: IItem|undefined = new Club();
+export const WarriorStartItem: IItem|undefined = new GreatSword();
+export const ClericStartItem: IItem|undefined = new HolySword();
+export const MageStartItem: IItem|undefined = new MagicStaff();
+export const ThiefStartItem: IItem|undefined = new Rifle();
 
 // TREASURE ASSIGNMENTS
-// todo: assign treasure from chests
 export function GetItemsInTreasureChests(): IItem[]{
   return [
-    new UselessAmulet(), //this will be found by the warrior
-    new UselessAmulet(), //this will be found by the cleric
-    new UselessAmulet(), //this will be found by the mage
-    new UselessAmulet(), //this will be found by the thief
+    new HealingPotion(), //this will be found by the warrior
+    new HolyLocket(), //this will be found by the cleric
+    new FireGrimoire(), //this will be found by the mage
+    new RustyKnife(), //this will be found by the thief
   ];
 }
