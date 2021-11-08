@@ -12,14 +12,77 @@ body {
   white-space: pre;
 }
 .dragon {
-  width: 49%;
-  display: inline-block;
+  display: flex;
+  align-items: center;
+  margin-bottom: 100px;
 }
-.hp {
-  color: red;
+.dragon-healthbar {
+  position: absolute;
+  margin: auto;
+  text-align: center;
+  top: 20px;
+  left: 0;
+  right: 0;
+  border: 3px solid #222034;
+  border-radius: 5px;
+  background: linear-gradient(#323c39 20%, #494d4c 0%);;
+  494d4c
+  height: 24px;
+  width: 500px;
+}
+.dragon-healthbar p {
+  position: absolute;
+  text-align: center;
+  left: 0;
+  right: 0;
+  margin: 0;
+  color: white;
+  font-weight: bolder;
+}
+.dragon-hp {
+  height: 24px;
+  background: red;
+  overflow: hidden;
+}
+.player {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+}
+.player-healthbar {
+  margin-top: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border: 2px solid #444;
+  background-color: grey;
+  top: 20px;
+  left: 0;
+  right: 0;
+  height: 5px;
+  width: 44px;
+}
+
+.player-hp {
+  background-color: lightgreen;
+}
+.player-hp {
+  height: 5px;
+}
+.game-container{
+  margin-top: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .game {
   display: flex;
+  position: relative;
+  width: 1090px;
+  height: 624px;
+  background-size: cover;
+  background-position: center;
 }
 .left {
   display: inline-block;
@@ -28,7 +91,7 @@ body {
 table.grid {
   font-family: monospace;
   font-size: 1em;
-  margin: auto;
+  margin: 0 auto;
 }
 .grid td {
   border-collapse: collapse;
@@ -38,6 +101,23 @@ table.grid {
   margin: 0;
   padding: 0;
   border: 1px solid darkgreen;
+}
+.game-field {
+  font-family: monospace;
+  font-size: 1em;
+  margin: auto;
+  margin-top: 200px;
+  transform: skew(-30deg);
+}
+.game-field td {
+  border-collapse: collapse;
+  text-align: center;
+  width: 50px;
+  height: 50px;
+  margin: 0;
+  padding: 0;
+  /* border: 1px solid darkgreen; */
+  transform: skew(30deg);
 }
 .block {
   display: block;
@@ -92,10 +172,25 @@ button:not(:disabled):hover{
 }
 td.loot-chest{
   height: 9em;
+  width: 150px;
 }
 .red{
   color: red;
 }
 .yellow{
   color: yellow;
+}
+.log-ui {
+  font-size: 18px;
+  fon-family: monospace;
+  position: fixed;
+  bottom: 10px;
+  left: 10px;
+  color: #999;
+}
+.log-ui .current {
+  color: white
+}
+.log-ui .current > span{
+  color: lightgreen
 }
