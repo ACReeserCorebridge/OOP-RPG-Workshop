@@ -1,5 +1,5 @@
 import { CharacterClassName, ICharacter, ICharacterActionDecision } from "../off-limits/ICharacter";
-import { IWeapon, IItem } from "../off-limits/IWeapons";
+import { IWeapon, IItem, isMeleeWeapon } from "../off-limits/IWeapons";
 
 //todo: use this base class somehow in Characters.tsx
 export class Character implements ICharacter {
@@ -13,12 +13,27 @@ export class Character implements ICharacter {
         throw new Error("Method not implemented.");
     }
     move(){
-        throw new Error("Method not implemented.");
+        if (this.weapons.some(x => isMeleeWeapon(x))){
+            this.position = Math.max(this.position - 5, 1);
+        }
     }
     chooseAction(): ICharacterActionDecision{
-        throw new Error("Method not implemented.");
+        return {
+            attack: this.weapons[0]
+        }
     }
     getASCIIStatus(): string {
-        throw new Error("Method not implemented.");
+        if (this.health === 0) return 'X';
+
+        switch (this.classname()) {
+            case 'Warrior':
+                return '⚔️';
+            case 'Thief':
+                return '🗡️';
+            case 'Mage':
+                return '🧙‍♂️';
+            case 'Cleric':
+                return '✨';
+        }
     }
 }
