@@ -1,5 +1,5 @@
 import { ICharacter, CharacterClassName, equip, ICharacterActionDecision } from '../off-limits/ICharacter';
-import { IWeapon, IItem, isMeleeWeapon } from '../off-limits/IWeapons';
+import { IWeapon, IItem, isMeleeWeapon, isEnchantedItem } from '../off-limits/IWeapons';
 import { Character } from './BaseCharacter';
 import {
   ClericStartItem,
@@ -11,104 +11,86 @@ import {
 //todo: too many duplicate classes in this file! 
 //todo: customize the chooseAction() to better fight the dragon
 //todo: update the `getASCIIStatus` function(s) to return X when dead and a unique character per class
-
-export class Warrior implements ICharacter {
+export class BaseCharacter implements ICharacter {
   health: number = 5;
   position: number = 10;
   weapons: IWeapon[] = [];
   item?: IItem;
   feet = new Feet(this);
   classname(): CharacterClassName {
-    return 'Warrior';
+    return this.className;
   }
   move(){
     this.feet.move();
   }
+  constructor(public className: CharacterClassName, public name: string, public key: number) {
+  }
+  chooseAction(): ICharacterActionDecision {
+    let weapon = this.getLatestWeapon();
+    // use the Item before the dragon attacks: 
+    // it saves few moves
+    if (this.item) {
+      return {
+        use: this.item
+      }
+    }
+    return {
+      attack: weapon
+    }
+  }
+  getLatestWeapon(): IWeapon {
+    return this.weapons[this.weapons.length - 1];
+  }
+  getASCIIStatus(): string {
+    if (this.isDead()) {
+      return "X";
+    }
+    return this.className[0];
+  }
+  isDead(): boolean {
+    return this.health < 1;
+  }
+}
+
+
+export class Warrior extends BaseCharacter {
   constructor(public name: string, public key: number) {
+    super('Warrior', name, key);
     equip(WarriorStartItem, this);
   }
-  chooseAction(): ICharacterActionDecision {
-    return {
-      attack: this.weapons[0]
-    }
-  }
-  getASCIIStatus(): string {
-      return "@";
-  }
 }
 
-export class Cleric implements ICharacter{
-  health: number = 5;
-  position: number = 10;
-  weapons: IWeapon[] = [];
-  item?: IItem;
-  feet = new Feet(this);
-  classname(): CharacterClassName {
-    return 'Cleric';
-  }
-  move(){
-    this.feet.move();
-  }
+export class Cleric extends BaseCharacter{
   constructor(public name: string, public key: number) {
+    super('Cleric', name, key);
     equip(ClericStartItem, this);
   }
-  chooseAction(): ICharacterActionDecision {
-    return {
-      attack: this.weapons[0]
-    }
-  }
-  getASCIIStatus(): string {
-      return "@";
-  }
 }
 
-export class Mage implements ICharacter {
-  health: number = 5;
-  position: number = 10;
-  weapons: IWeapon[] = [];
-  item?: IItem;
-  feet = new Feet(this);
-  classname(): CharacterClassName {
-    return 'Mage';
-  }
+export class Mage extends BaseCharacter {
+  mana = 1;
   constructor(public name: string, public key: number) {
+    super('Mage', name, key);
     equip(MageStartItem, this);
   }
-  move(){
-    this.feet.move();
-  }
   chooseAction(): ICharacterActionDecision {
-    return {
-      attack: this.weapons[0]
+    let weapon = this.getLatestWeapon();
+    if (this.health < 3 && this.item && this.mana > 0) {
+      this.mana--;
+      return {
+        use: this.item
+      }
     }
-  }
-  getASCIIStatus(): string {
-      return "@";
+    return {
+      attack: weapon
+    }
   }
 }
 
-export class Thief implements ICharacter {
-  health: number = 5;
-  position: number = 10;
-  weapons: IWeapon[] = [];
-  item?: IItem;
-  feet = new Feet(this);
-  move(){
-    this.feet.move();
-  }
-  classname(): CharacterClassName {
-    return 'Thief';
-  }
+export class Thief extends BaseCharacter {
   constructor(public name: string, public key: number) {
+    super('Thief', name, key);
     equip(ThiefStartItem, this);
-  }
-  chooseAction(): ICharacterActionDecision {
-    return {
-      attack: this.weapons[0]
-    }
-  }
-  getASCIIStatus(): string {
-      return "@";
   }
 }
 
