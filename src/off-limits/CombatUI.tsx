@@ -1,6 +1,6 @@
 import React from "react";
 import { AppState } from "..";
-import { Dragon } from "./Dragon";
+import { DeadDragon, Dragon } from "./Dragon";
 import { ICharacter } from "./ICharacter";
 import { LogUI } from "./LogUI";
 
@@ -8,7 +8,7 @@ export const CombatUI: React.FC<{
     state: AppState;
 }> = (props) => {
     return (
-        <div>
+        <div className="wrapper">
             <div className="game">
                 <table className="grid">
                     <thead>
@@ -35,7 +35,11 @@ export const CombatUI: React.FC<{
                         ))}
                     </tbody>
                 </table>
+                {props.state.dragonHP > 0 ? (
                 <Dragon hp={props.state.dragonHP} />
+                ) : (
+                <DeadDragon hp={0} />
+                )}
                 {props.state.characters.every((x) => x.health < 1) ? (
                     <div className="gameover">GAME OVER</div>
                 ) : null}

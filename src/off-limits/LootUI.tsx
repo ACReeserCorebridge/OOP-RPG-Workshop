@@ -8,21 +8,6 @@ export const LootUI: React.FC<{
     start: () => void;
     loot: (index: number) => void;
 }> = (props) => {
-    useEffect(() => {
-        const tID = setInterval(() => {
-            for (let i = 0; i < props.state.chests.length; i++) {
-                const chest = props.state.chests[i];
-                if (chest.opened){
-                    continue;
-                } else {
-                    props.loot(i);
-                    return;
-                }
-            }
-            props.start();
-        }, 3000);
-        return () => clearInterval(tID)
-    });
     const anyClosed = props.state.chests.some(x => !x.opened);
     return (
         <div>

@@ -5,12 +5,6 @@ export const MenuUI: React.FC<{
     state: AppState;
     start: () => void;
 }> = (props) => {
-    useEffect(() => {
-        const tID = setTimeout(() => {
-            props.start();
-        }, 12000);
-        return () => clearTimeout(tID)
-    })
     return (
         <div className="game">
             <table className="grid wide">
