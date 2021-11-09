@@ -58,8 +58,13 @@ export function GameTick(state: AppState): Pick<AppState, keyof AppState> | unde
       let dragonDamage: number | undefined = undefined;
       if (activeChar.health > 0) {
         const act = getCharacterAction(activeChar);
-        if (act.dragonDamage)
+        if (act.dragonDamage){
+          document.querySelectorAll('.character-dragon')[0].classList.add('damaged');
+          setTimeout(() =>{
+            document.querySelectorAll('.character-dragon')[0].classList.remove('damaged');
+          }, 1000);
           dragonDamage = act.dragonDamage;
+        }
         const partyHeal = act.partyHealthBonus;
         if (partyHeal != null){
           state.characters.forEach(x => x.health += partyHeal);
@@ -83,6 +88,11 @@ export function GameTick(state: AppState): Pick<AppState, keyof AppState> | unde
         state.currentCharacter + 1 === state.characters.length
           ? 0
           : state.currentCharacter + 1;
+          console.warn('.character-'+activeChar.name);
+      document.querySelectorAll('.character-'+activeChar.name)[0].classList.add('damaged');
+      setTimeout(() =>{
+        document.querySelectorAll('.character-'+activeChar.name)[0].classList.remove('damaged');
+      }, 1000);
       if (state.dragonHP <= 0){
         const winners = state.characters.filter(x => x.health > 0).map(y => y.name);
         const winnerNoun = winners.length < 1 ? 'Nobody' : winners.join(',');
