@@ -1,4 +1,4 @@
-import { IWeapon, IItem, IMeleeWeapon, IRangedWeapon, IConsumableItem, IEnchantedItem } from "../off-limits/IWeapons";
+import { IWeapon, IItem, IMeleeWeapon, IRangedWeapon, IConsumableItem, IEnchantedItem, MaximumProjectileWeaponDamage, MaximumMeleeWeaponRange, MaximumConsumableHealthBonus } from "../off-limits/IWeapons";
 
 // INTERFACE QUICK REFERENCE
 // export interface IItem {
@@ -24,33 +24,44 @@ import { IWeapon, IItem, IMeleeWeapon, IRangedWeapon, IConsumableItem, IEnchante
 
 // WEAPON ARMORY
 // todo: add more and better weapons!
-export class Club implements IMeleeWeapon {
-  name = 'Club';
-  damage = 1;
-  meleeRange = 1;
+export class EnchantedQuiver implements IEnchantedItem {
+  name = 'Enchanted Quiver';
+  fireDamage = 2;
+  partyHealthBonus = MaximumConsumableHealthBonus;
 }
 
-// ITEM VAULT
-// todo: add more and better items!
-export class UselessAmulet implements IItem {
-  name = 'Useless Amulet';
+export class BattleFury implements IMeleeWeapon {
+  name = 'Battle Fury';
+  damage = 5;
+  meleeRange = MaximumMeleeWeaponRange;
 }
 
+export class Elvenskin implements IMeleeWeapon {
+  name = 'Elvin Skin';
+  damage = 5;
+  meleeRange = MaximumMeleeWeaponRange;
+}
+
+export class DragonLance implements IRangedWeapon<IWeapon> {
+  name = 'Dragon Lance';
+  damage: 0 = 0;
+  projectiles = Array(MaximumProjectileWeaponDamage).fill(new Elvenskin());
+}
 
 // ITEM ASSIGNMENTS
 // todo: assign starting items
-export const WarriorStartItem: IItem|undefined = new Club();
-export const ClericStartItem: IItem|undefined = new Club();
-export const MageStartItem: IItem|undefined = undefined;
-export const ThiefStartItem: IItem|undefined = new Club();
+export const WarriorStartItem: IItem|undefined = new BattleFury();
+export const ClericStartItem: IItem|undefined = new Elvenskin();
+export const MageStartItem: IItem|undefined = new EnchantedQuiver();
+export const ThiefStartItem: IItem|undefined = new DragonLance();
 
 // TREASURE ASSIGNMENTS
 // todo: assign treasure from chests
 export function GetItemsInTreasureChests(): IItem[]{
   return [
-    new UselessAmulet(), //this will be found by the warrior
-    new UselessAmulet(), //this will be found by the cleric
-    new UselessAmulet(), //this will be found by the mage
-    new UselessAmulet(), //this will be found by the thief
+    new BattleFury(), //this will be found by the warrior
+    new Elvenskin(), //this will be found by the cleric
+    new EnchantedQuiver(), //this will be found by the mage
+    new DragonLance(), //this will be found by the thief
   ];
 }
