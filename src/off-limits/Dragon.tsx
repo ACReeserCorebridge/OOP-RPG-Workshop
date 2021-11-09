@@ -14,6 +14,7 @@ export const Dragon: React.FC<{
       <div>BOSS DRAGON</div>
       <div className="hp">{hpString}</div>
       <div> </div>
+      <div className="character-dragon">
       {' _/=======() \n' +
         '(/___   /|\\          ()==========__\n' +
         '      _/ | \\        //|   ______/ )\n' +
@@ -27,8 +28,9 @@ export const Dragon: React.FC<{
         '             __(===(  )\\\n' +
         '            (((~) __(_/   |\n' +
         '                 (((~)   /\n' +
-        '                 ______/ /\n' +
-        'Art by Shanaka Dias'}
+        '                 ______/ /\n'}
+        </div>
+        <div>{'Art by Shanaka Dias'}</div>
     </div>
   );
 };
