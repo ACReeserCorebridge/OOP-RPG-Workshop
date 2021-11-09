@@ -1,4 +1,4 @@
-import { CharacterClassName, ICharacter, ICharacterActionDecision } from "../off-limits/ICharacter";
+import { CharacterClassName, equip, ICharacter, ICharacterActionDecision } from "../off-limits/ICharacter";
 import { IWeapon, IItem } from "../off-limits/IWeapons";
 
 export class Character implements ICharacter {
@@ -9,7 +9,12 @@ export class Character implements ICharacter {
     item?: IItem;
 
     // Have an option to assign
-    constructor(private readonly asciiCharacter: string) { }
+    constructor(
+        private readonly characterItem?: IItem,
+        private readonly asciiCharacter?: string,
+    ) {
+        equip(characterItem, this);
+    }
     
     classname(): CharacterClassName {
         throw new Error("Method not implemented.");
@@ -18,7 +23,9 @@ export class Character implements ICharacter {
         throw new Error("Method not implemented.");
     }
     chooseAction(): ICharacterActionDecision{
-        throw new Error("Method not implemented.");
+        return {
+            attack: this.weapons[0]
+        }
     }
     getASCIIStatus(): string {
         if (this.health <= 0) {
