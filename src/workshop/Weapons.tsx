@@ -100,13 +100,18 @@ export class Elixer implements IConsumableItem {
   healthBonus = 5;
 }
 
+export class Food implements IConsumableItem {
+  name = 'Food';
+  healthBonus = 2;
+}
+
 
 // ITEM ASSIGNMENTS
 // todo: assign starting items
-export const WarriorStartItem: IItem|undefined = new Mace();
-export const ClericStartItem: IItem|undefined = new Crossbow();
-export const MageStartItem: IItem|undefined = new Staff();
-export const ThiefStartItem: IItem|undefined = new ElvishSword();
+export const WarriorStartItem: IItem|undefined = new ElvishSword();
+export const ClericStartItem: IItem|undefined = new Mace();
+export const MageStartItem: IItem|undefined = new Crossbow();
+export const ThiefStartItem: IItem|undefined = new Bow();
 
 // TREASURE ASSIGNMENTS
 // todo: assign treasure from chests
@@ -114,7 +119,7 @@ export function GetItemsInTreasureChests(): IItem[]{
   return [
     new Elixer(), //this will be found by the warrior
     new Book(), //this will be found by the cleric
-    new Mirror(), //this will be found by the mage
-    new Ring(), //this will be found by the thief
+    new Ring(), //this will be found by the mage
+    new Food(), //this will be found by the thief
   ];
 }
