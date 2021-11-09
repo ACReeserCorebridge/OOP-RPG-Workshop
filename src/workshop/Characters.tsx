@@ -11,21 +11,21 @@ import {
 
 export class Warrior extends BaseCharacter {
   constructor(name: string, key: number) {
-    super(name, key, 'Warrior', '⚔️');
+    super(name, key, 'Warrior', 'Greg');
     equip(WarriorStartItem, this);
   }
 }
 
 export class Cleric extends BaseCharacter{
   constructor(name: string, key: number) {
-    super(name, key, 'Cleric', '⚒️');
+    super(name, key, 'Cleric', 'Justin');
     equip(ClericStartItem, this);
   }
 }
 
 export class Mage extends BaseCharacter {
   constructor(name: string, key: number) {
-    super(name, key, 'Mage', '✨');
+    super(name, key, 'Mage', 'Nicho');
     equip(MageStartItem, this);
   }
 
@@ -38,7 +38,7 @@ export class Mage extends BaseCharacter {
 
 export class Thief extends BaseCharacter {
   constructor(name: string, key: number) {
-    super(name, key, 'Thief', '🏹');
+    super(name, key, 'Thief', 'Daniel');
     equip(ThiefStartItem, this);
     equip(ThiefAditionalStartItem, this);
   }
