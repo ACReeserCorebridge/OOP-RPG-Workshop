@@ -281,6 +281,7 @@ button{
   background-color: green;
   font-family: monospace;
   border: 1px solid lightgreen;
+  margin: .5rem 0;
 }
 button.smaller{
   padding: 4px;
