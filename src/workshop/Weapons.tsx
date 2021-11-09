@@ -23,7 +23,6 @@ import { IWeapon, IItem, IMeleeWeapon, IRangedWeapon, IConsumableItem, IEnchante
 // }
 
 // WEAPON ARMORY
-// todo: add more and better weapons!
 export class Club implements IMeleeWeapon {
   name = 'Club';
   damage = 1;
@@ -32,19 +31,19 @@ export class Club implements IMeleeWeapon {
 
 export class Staff implements IMeleeWeapon {
   name = 'Staff';
-  damage = 6;
+  damage = 3;
   meleeRange = 2;
 }
 
 export class ElvishSword implements IMeleeWeapon {
   name = 'Sting'; //Bilbo's glowing sword in the Hobbit
-  damage = 20;
+  damage = 6;
   meleeRange = 1;
 }
 
 export class Mace implements IMeleeWeapon {
   name = 'Spikey Ball on a Stick';
-  damage = 8;
+  damage = 7;
   meleeRange = 2;
 }
 
@@ -56,8 +55,8 @@ export class Arrow implements IWeapon {
 export class Bow implements IRangedWeapon<Arrow> {
   name = 'Bow and Arrow';
   damage: 0 = 0;
-  projectiles: Arrow[] = [new Arrow(), new Arrow(), new Arrow()];
-  //TODO: determine if should populate the array here or if you should load the quiver elsewhere
+  quiverSize = 10;
+  projectiles: Arrow[] = [new Arrow(), new Arrow(), new Arrow(), new Arrow(), new Arrow(), new Arrow(), new Arrow(), new Arrow(), new Arrow(), new Arrow()];
 }
 
 export class Bolt implements IWeapon {
@@ -68,41 +67,40 @@ export class Bolt implements IWeapon {
 export class Crossbow implements IRangedWeapon<Bolt> {
   name = 'Crossbow';
   damage: 0 = 0;
-  projectiles: Bolt[] = [new Bolt(), new Bolt(), new Bolt()];
+  projectiles: Bolt[] = [new Bolt(), new Bolt(), new Bolt(), new Bolt(), new Bolt(), new Bolt(), new Bolt(), new Bolt(), new Bolt(), new Bolt()];
 }
 
 // ITEM VAULT
-// todo: add more and better items!
 export class UselessAmulet implements IItem {
   name = 'Useless Amulet';
 }
 
 export class Ring implements IEnchantedItem {
   name = 'Ring';
-  fireDamage = 0;
-  partyHealthBonus = 5;
-}
-
-export class Mirror implements IEnchantedItem {
-  name = 'Mirror';
-  fireDamage = 8;
-  partyHealthBonus = 2;
-}
-
-export class Book implements IEnchantedItem {
-  name = 'Book';
-  fireDamage = 3;
+  fireDamage = 2;
   partyHealthBonus = 3;
 }
 
+export class Mirror implements IEnchantedItem {
+  name = 'Sarcastic Magic Mirror';
+  fireDamage = 4;
+  partyHealthBonus = 1;
+}
+
+export class Book implements IEnchantedItem {
+  name = 'Epic Tales of Times Past';
+  fireDamage = 5;
+  partyHealthBonus = 1;
+}
+
 export class Elixer implements IConsumableItem {
-  name = 'Elixer';
-  healthBonus = 5;
+  name = 'Guava Nectar';
+  healthBonus = 2;
 }
 
 export class Food implements IConsumableItem {
-  name = 'Food';
-  healthBonus = 2;
+  name = 'Krispy Kremes';
+  healthBonus = 1;
 }
 
 
@@ -119,7 +117,7 @@ export function GetItemsInTreasureChests(): IItem[]{
   return [
     new Elixer(), //this will be found by the warrior
     new Book(), //this will be found by the cleric
-    new Ring(), //this will be found by the mage
+    new Mirror(), //this will be found by the mage
     new Food(), //this will be found by the thief
   ];
 }
