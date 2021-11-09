@@ -41,7 +41,7 @@ export function GameTick(state: AppState): Pick<AppState, keyof AppState> | unde
         }
       }
       const newLog = activeChar.name + ' ' + verb;
-      console.log(newLog);
+      // console.log(newLog);
       return {
         characters: state.characters,
         currentCombatPhase: CombatPhase.attack,
@@ -66,7 +66,7 @@ export function GameTick(state: AppState): Pick<AppState, keyof AppState> | unde
         }
         newLog = act.log;
       }
-      console.log(newLog);
+      // console.log(newLog);
       return {
         log: [newLog,state.log[0], state.log[1], state.log[2]],
         currentCombatPhase: CombatPhase.dragon,
@@ -87,7 +87,7 @@ export function GameTick(state: AppState): Pick<AppState, keyof AppState> | unde
         const winners = state.characters.filter(x => x.health > 0).map(y => y.name);
         const winnerNoun = winners.length < 1 ? 'Nobody' : winners.join(',');
         const newLog = `${winnerNoun} rejoice${winners.length <= 1 ? 's' : ''}!`;
-        console.log(newLog);
+        // console.log(newLog);
         return {
           log: [newLog, state.log[0], state.log[1], state.log[2]],
           currentCombatPhase: CombatPhase.dragon,
@@ -108,7 +108,7 @@ export function GameTick(state: AppState): Pick<AppState, keyof AppState> | unde
               : 'kills ' + activeChar.name;
         }
         const newLog = 'Dragon ' + verb;
-        console.log(newLog);
+        // console.log(newLog);
         return {
           log: [newLog, state.log[0], state.log[1], state.log[2]],
           currentCombatPhase: CombatPhase.move,

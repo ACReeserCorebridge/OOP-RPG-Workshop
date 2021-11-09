@@ -12,7 +12,7 @@ import {
 //todo: customize the chooseAction() to better fight the dragon
 //todo: update the `getASCIIStatus` function(s) to return X when dead and a unique character per class
 
-export class Warrior implements ICharacter {
+export class Warrior extends Character implements ICharacter {
   health: number = 5;
   position: number = 10;
   weapons: IWeapon[] = [];
@@ -25,6 +25,7 @@ export class Warrior implements ICharacter {
     this.feet.move();
   }
   constructor(public name: string, public key: number) {
+    super('W');
     equip(WarriorStartItem, this);
   }
   chooseAction(): ICharacterActionDecision {
@@ -32,12 +33,9 @@ export class Warrior implements ICharacter {
       attack: this.weapons[0]
     }
   }
-  getASCIIStatus(): string {
-      return "@";
-  }
 }
 
-export class Cleric implements ICharacter{
+export class Cleric extends Character implements ICharacter{
   health: number = 5;
   position: number = 10;
   weapons: IWeapon[] = [];
@@ -50,6 +48,7 @@ export class Cleric implements ICharacter{
     this.feet.move();
   }
   constructor(public name: string, public key: number) {
+    super('C');
     equip(ClericStartItem, this);
   }
   chooseAction(): ICharacterActionDecision {
@@ -57,12 +56,9 @@ export class Cleric implements ICharacter{
       attack: this.weapons[0]
     }
   }
-  getASCIIStatus(): string {
-      return "@";
-  }
 }
 
-export class Mage implements ICharacter {
+export class Mage extends Character implements ICharacter {
   health: number = 5;
   position: number = 10;
   weapons: IWeapon[] = [];
@@ -72,6 +68,7 @@ export class Mage implements ICharacter {
     return 'Mage';
   }
   constructor(public name: string, public key: number) {
+    super('M');
     equip(MageStartItem, this);
   }
   move(){
@@ -82,12 +79,9 @@ export class Mage implements ICharacter {
       attack: this.weapons[0]
     }
   }
-  getASCIIStatus(): string {
-      return "@";
-  }
 }
 
-export class Thief implements ICharacter {
+export class Thief extends Character implements ICharacter {
   health: number = 5;
   position: number = 10;
   weapons: IWeapon[] = [];
@@ -100,15 +94,13 @@ export class Thief implements ICharacter {
     return 'Thief';
   }
   constructor(public name: string, public key: number) {
+    super('T');
     equip(ThiefStartItem, this);
   }
   chooseAction(): ICharacterActionDecision {
     return {
       attack: this.weapons[0]
     }
-  }
-  getASCIIStatus(): string {
-      return "@";
   }
 }
 
