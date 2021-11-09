@@ -52,7 +52,7 @@ class App extends Component<AppProps, AppState> {
       const newState = GameTick(this.state);
       if (newState)
         this.setState(newState);
-    }, 1000);
+    }, 500);
   }
   componentWillUnmount() {
     if (this.intID != null) {
