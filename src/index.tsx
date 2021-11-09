@@ -25,10 +25,10 @@ export interface AppState {
 function getNewGameState(): AppState{
   return {
     characters: [
-      new Warrior('Conan', 1),
-      new Cleric('Cuthbert', 2),
-      new Mage('Merlin', 3),
-      new Thief('Bilbo', 4)
+      new Warrior('Greg', 1),
+      new Cleric('Justin', 2),
+      new Mage('Nicho', 3),
+      new Thief('Daniel', 4)
     ],
     chests: GetItemsInTreasureChests().map(x => {return {item: x, opened: false}}),
     dragonHP: 100,

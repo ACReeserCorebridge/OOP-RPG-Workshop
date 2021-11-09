@@ -38,14 +38,23 @@ export const LootUI: React.FC<{
                                     {x.name} the {x.classname()} finds
                                 </td>
                                 {
-                                    props.state.chests[i].opened ? <td className="loot-chest">
-                                        {props.state.chests[i].item.name}
-                                    </td> : <td className="loot-chest">
-                                        <ChestText></ChestText>
-                                        <button onClick={() => props.loot(i)} className="smaller">
-                                            LOOT
-                                        </button>
-                                    </td>
+                                    props.state.chests[i].opened ? 
+                                        <td className="loot-chest">
+                                            <img
+                                                className='size-128px'
+                                                src={'/assets/OOP ' + props.state.chests[i].item.name.replace(' ', '') + '.svg'}>
+                                            </img>
+                                            <span className="display-block">
+                                                {props.state.chests[i].item.name}
+                                            </span>
+                                        </td>
+                                    :
+                                        <td className="loot-chest">
+                                            <ChestText></ChestText>
+                                            <button onClick={() => props.loot(i)} className="smaller">
+                                                LOOT
+                                            </button>
+                                        </td>
                                 }
                             </tr>
                         ))}

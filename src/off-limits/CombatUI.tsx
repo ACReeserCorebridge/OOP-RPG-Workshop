@@ -10,7 +10,7 @@ export const CombatUI: React.FC<{
     return (
         <div>
             <div className="game">
-                <table className="grid">
+                <table className="combat-grid">
                     <thead>
                         <tr>
                             <td>50ft</td>
@@ -82,10 +82,11 @@ export const CharacterCombatUI: React.FC<{
 }> = (props) => {
     const isDead = props.character.health <= 0;
     const hpClass = props.character.health <= 1 ? 'red' : props.character.health < 5 ? 'yellow': ''
+    const playerImage = `/assets/OOP ${props.character.getASCIIStatus()}.svg`;
     return (
         <span className={isDead? 'red': ''}>
-            <span className="block">
-                {props.character.getASCIIStatus()}
+                <span className="block">
+                    <img className="size-128px" src={playerImage} />
                 </span>
             <span className={"block "+hpClass}>[{props.character?.health}]</span>
         </span>

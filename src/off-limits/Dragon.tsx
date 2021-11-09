@@ -14,21 +14,7 @@ export const Dragon: React.FC<{
       <div>BOSS DRAGON</div>
       <div className="hp">{hpString}</div>
       <div> </div>
-      {' _/=======() \n' +
-        '(/___   /|\\          ()==========__\n' +
-        '      _/ | \\        //|   ______/ )\n' +
-        '        _|  \\      // | _/\n' +
-        '          |/|_   //  //\n' +
-        '           (oo) _//  /\n' +
-        '          //_/_/ /  |\n' +
-        '         @@/  |=    |\n' +
-        '              _=_  |\n' +
-        '                == |_ snd\n' +
-        '             __(===(  )\\\n' +
-        '            (((~) __(_/   |\n' +
-        '                 (((~)   /\n' +
-        '                 ______/ /\n' +
-        'Art by Shanaka Dias'}
+      <img className='size-dragon' src='/assets/OOP Dragon.svg'></img>
     </div>
   );
 };

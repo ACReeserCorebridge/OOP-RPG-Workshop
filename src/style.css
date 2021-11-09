@@ -12,7 +12,7 @@ body {
   white-space: pre;
 }
 .dragon {
-  width: 49%;
+  width: 30%;
   display: inline-block;
 }
 .hp {
@@ -21,16 +21,12 @@ body {
 .game {
   display: flex;
 }
-.left {
-  display: inline-block;
-  width: 49%;
-}
-table.grid {
+table.grid, table.combat-grid {
   font-family: monospace;
   font-size: 1em;
   margin: auto;
 }
-.grid td {
+.grid td, .combat-grid td {
   border-collapse: collapse;
   text-align: center;
   width: 3em;
@@ -38,6 +34,10 @@ table.grid {
   margin: 0;
   padding: 0;
   border: 1px solid darkgreen;
+}
+.combat-grid tbody td {
+  width: 128px;
+  height: 128px;
 }
 .block {
   display: block;
@@ -98,4 +98,18 @@ td.loot-chest{
 }
 .yellow{
   color: yellow;
+}
+
+.size-128px {
+  height: 128px;
+  width: 128px;
+}
+
+.size-dragon {
+  height: 400px;
+  width: 400px;
+}
+
+.display-block {
+  display: block;
 }

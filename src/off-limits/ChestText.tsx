@@ -2,12 +2,8 @@ import React from "react";
 
 export const ChestText: React.FC = () => {
     return (
-      <span className="ascii">
-        {' ______ ___\n' +
-          '//    //  \\\\\n' +
-          '#=====##===#\n' +
-          '| [8] ||   |\n' +
-          '|_____||___|\n'+'\n'}
-      </span>
+      <div>
+        <img className="size-128px" src="/assets/OOP Chest.svg" />
+      </div>
     );
   };
