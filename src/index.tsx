@@ -7,7 +7,7 @@ import { CombatUI } from './off-limits/CombatUI';
 import { LootUI } from './off-limits/LootUI';
 import { MenuUI } from './off-limits/MenuUI';
 import { equip, ICharacter } from './off-limits/ICharacter';
-import { GetItemsInTreasureChests } from './workshop/Weapons';
+import { GetItemsInTreasureChests } from './workshop/GameConfig';
 import { IItem } from './off-limits/IWeapons';
 
 interface AppProps {}
