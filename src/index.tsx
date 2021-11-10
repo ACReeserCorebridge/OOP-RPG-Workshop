@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
-import { Cleric, Mage, Thief, Warrior } from './workshop/Characters';
+import { RandomCharacter } from './workshop/Characters';
 import {  GameTick, CombatPhase } from './off-limits/Game';
 import './style.css';
 import { CombatUI } from './off-limits/CombatUI';
 import { LootUI } from './off-limits/LootUI';
 import { MenuUI } from './off-limits/MenuUI';
 import { equip, ICharacter } from './off-limits/ICharacter';
-import { GetItemsInTreasureChests } from './workshop/Weapons';
+import { GetItemsInTreasureChests } from './workshop/GameConfig';
 import { IItem } from './off-limits/IWeapons';
 
 interface AppProps {}
@@ -23,14 +23,15 @@ export interface AppState {
 }
 
 function getNewGameState(): AppState{
+  let characters = [
+    new RandomCharacter(1),
+    new RandomCharacter(2),
+    new RandomCharacter(3),
+    new RandomCharacter(4),
+  ];
   return {
-    characters: [
-      new Warrior('Conan', 1),
-      new Cleric('Cuthbert', 2),
-      new Mage('Merlin', 3),
-      new Thief('Bilbo', 4)
-    ],
-    chests: GetItemsInTreasureChests().map(x => {return {item: x, opened: false}}),
+    characters: characters,
+    chests: GetItemsInTreasureChests(characters).map(x => {return {item: x, opened: false}}),
     dragonHP: 100,
     currentCharacter: 0,
     currentCombatPhase: CombatPhase.move,
