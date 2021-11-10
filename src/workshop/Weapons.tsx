@@ -25,28 +25,27 @@ import { IWeapon, IItem, IMeleeWeapon, IRangedWeapon, IConsumableItem, IEnchante
 // WEAPON ARMORY
 
 // Melee Weapon
-export class ShortSword implements IMeleeWeapon {
+export class UnicornSword implements IMeleeWeapon {
   name = 'Short Sword';
   damage = 3;
   meleeRange = 2;
 }
 
-export class LongSword implements IMeleeWeapon {
+export class DeadlySword implements IMeleeWeapon {
   name = 'Long Sword';
-  damage = 5;
+  damage = 4;
   meleeRange = 2;
 }
 
-export class DeadlySword implements IMeleeWeapon {
+export class DivineSword implements IMeleeWeapon {
   name = 'Deadly Sword';
   damage = 9;
   meleeRange = 2
 }
 
-export class Javelin  implements IMeleeWeapon {
+export class Javelin  implements IWeapon {
   name = 'Javelin';
   damage = 7;
-  meleeRange = 2;
 }
 
 export class Staff implements IMeleeWeapon {
@@ -62,25 +61,27 @@ export class StormHammer implements IMeleeWeapon {
 }
 
 // Range Weapon
-export class Bow implements IRangedWeapon<IWeapon> {
-  name = 'Bow Range Item'
+export class JavelinLightning implements IRangedWeapon<Javelin> {
+  name = 'Javelin Lightning'
   damage: 0 = 0;
   projectiles = [ 
-    {
-      name: 'Bow',
-      damage: 3
-    }
+    new Javelin(),
+    new Javelin(),
+    new Javelin()
   ];
 }
 
-export class Gun implements IRangedWeapon<IWeapon> {
+export class Gun implements IWeapon {
+  name = 'Gun';
+  damage = 3
+}
+
+export class AirGun implements IRangedWeapon<Gun> {
   name = 'Gun'
   damage: 0 = 0;
   projectiles = [ 
-    {
-      name: 'Gun',
-      damage: 8
-    }
+    new Gun(),
+    new Gun()
   ];
 }
 
@@ -90,67 +91,87 @@ export class FireStone implements IEnchantedItem {
   partyHealthBonus = 5;
 }
 
-export class SemiHealthPotion implements IConsumableItem {
-  name = 'Health Potion';
-  healthBonus = 3;
-
-  randomHealthBonus(min: number, max: number) {
-    return Math.floor(Math.random() * (max - min + 1) + min)
-  }
+export class StormRegun implements IEnchantedItem {
+  name = 'Storm Regun';
+  fireDamage = 5;
+  partyHealthBonus = 3;
 }
 
-export class FullHealthPotion implements IConsumableItem {
-  name = 'Health Potion';
+export class HealingWater implements IConsumableItem {
+  name = 'Healing Water';
+  healthBonus = 3;  
+}
+
+export class HolyHealingWater implements IConsumableItem {
+  name = 'Holy Healing Water';
   healthBonus = 5;
 }
 
 // ITEM ASSIGNMENTS
-export const WarriorStartItem: IItem|undefined = new LongSword();
+export const WarriorStartItem: IItem|undefined = new DeadlySword();
 export const ClericStartItem: IItem|undefined = new Staff();
-export const MageStartItem: IItem|undefined = new FireStone();
-export const ThiefStartItem: IItem|undefined = new ShortSword();
+export const MageStartItem: IItem|undefined = new JavelinLightning();
+export const ThiefStartItem: IItem|undefined = new UnicornSword();
 
 export function randomItemPick(min: number, max: number) {
   return Math.floor(Math.random() * (max - min + 1) + min)
 }
 
+class TreasureChestItems {
+  public constructor(
+    private readonly weapons: IItem[]
+  ) { }
+
+  public createRandomItemInChest() {
+    return this.weapons[ this.generateRandomItemInChest(0, this.weapons?.length) ];
+  }
+
+  private generateRandomItemInChest(min: number, max: number) {
+    return Math.floor(Math.random() * (max - min + 1) + min)
+  }
+}
+
 
 function GenerateWarriorItemInChest(): IItem {
   const warriorItems = [
-    new DeadlySword(),
+    new HealingWater(),
     new StormHammer(),
-    new Gun(),
-    new Bow()
+    new DivineSword(),
+    new HolyHealingWater()
   ];
 
-  return warriorItems[ randomItemPick(0, warriorItems.length) ];
+  return new TreasureChestItems(warriorItems)
+    .createRandomItemInChest();
 }
 
 function GenerateClericItemInChest(): IItem {
   const clericItems = [
     new Javelin(),
-    new StormHammer()
+    new HolyHealingWater()
   ];
 
-  return clericItems[ randomItemPick(0, clericItems.length)];
+  return new TreasureChestItems(clericItems)
+    .createRandomItemInChest();
 }
 
 function GenerateMageItemInChest(): IItem {
   const mageItems = [
-    new SemiHealthPotion(),
-    new FullHealthPotion(),
+    new StormRegun(),
+    new FireStone()
   ];
 
-  return mageItems[ randomItemPick(0, mageItems.length)]
+  return new TreasureChestItems(mageItems)
+    .createRandomItemInChest();
 }
 
 function GenerateThiefItemInChest(): IItem {
   const thiefItems = [
-    new ShortSword(),
-    new LongSword()
+    new HealingWater(),
+    new AirGun()
   ];
 
-  return thiefItems[ randomItemPick(0, thiefItems.length) ];
+  return new TreasureChestItems(thiefItems)
+    .createRandomItemInChest();
 }
 
 // TREASURE ASSIGNMENTS
