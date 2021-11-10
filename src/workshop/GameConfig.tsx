@@ -103,6 +103,6 @@ let recentClasses: CharacterClass[] = [];
 
 export function GetRandomClass(): CharacterClass {
   let chosen: CharacterClass = Classes[Math.floor(Math.random() * Classes.length)];
-  recentClasses.unshift(chosen);
+  recentClasses.push(chosen);
   return chosen;
 }
