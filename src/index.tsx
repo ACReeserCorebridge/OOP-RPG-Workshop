@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
-import { RandomCharacter } from './workshop/Characters';
+import { Cleric, Mage, RandomCharacter, Thief, Warrior } from './workshop/Characters';
 import {  GameTick, CombatPhase } from './off-limits/Game';
 import './style.css';
 import { CombatUI } from './off-limits/CombatUI';
@@ -23,15 +23,14 @@ export interface AppState {
 }
 
 function getNewGameState(): AppState{
-  let characters = [
-    new RandomCharacter(1),
-    new RandomCharacter(2),
-    new RandomCharacter(3),
-    new RandomCharacter(4),
-  ];
   return {
-    characters: characters,
-    chests: GetItemsInTreasureChests(characters).map(x => {return {item: x, opened: false}}),
+    characters: [
+      new Warrior('Conan', 1),
+      new Cleric('Cuthbert', 2),
+      new Mage('Merlin', 3),
+      new Thief('Bilbo', 4)
+    ],
+    chests: GetItemsInTreasureChests().map(x => {return {item: x, opened: false}}),
     dragonHP: 100,
     currentCharacter: 0,
     currentCombatPhase: CombatPhase.move,

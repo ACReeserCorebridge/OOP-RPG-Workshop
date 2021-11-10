@@ -50,11 +50,11 @@ export function GetRandomName(): string {
 }
 
 // gets a list of class-specific items
-export function GetItemsInTreasureChests(characters: BaseCharacter[]): IItem[] {
+export function GetItemsInTreasureChests(): IItem[] {
   let items: IItem[] = [];
 
-  characters.forEach((c) => {
-    items.push(c._class.getRandomItem());
+  recentClasses.forEach((c) => {
+    items.push(c.getRandomItem());
   });
 
   return items;
@@ -111,6 +111,10 @@ export const Classes: CharacterClass[] = [
   ),
 ];
 
+let recentClasses: CharacterClass[] = [];
+
 export function GetRandomClass(): CharacterClass {
-  return Classes[Math.floor(Math.random() * Classes.length)];
+  let chosen: CharacterClass = Classes[Math.floor(Math.random() * Classes.length)];
+  recentClasses.unshift(chosen);
+  return chosen;
 }
