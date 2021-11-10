@@ -1,16 +1,5 @@
-import {
-  equip,
-  ICharacter,
-  ICharacterActionDecision,
-} from "../off-limits/ICharacter";
-import {
-  IWeapon,
-  IItem,
-  isMeleeWeapon,
-  isConsumable,
-  isEnchantedItem,
-  isRangedWeapon,
-} from "../off-limits/IWeapons";
+import { equip, ICharacter, ICharacterActionDecision } from "../off-limits/ICharacter";
+import { IWeapon, IItem, isMeleeWeapon, isConsumable, isEnchantedItem, isRangedWeapon } from "../off-limits/IWeapons";
 import { CharacterClass } from "./Class";
 import { BareHands } from "./Weapons";
 

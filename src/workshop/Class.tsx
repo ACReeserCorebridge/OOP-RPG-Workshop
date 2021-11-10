@@ -1,20 +1,11 @@
-import {
-  CharacterClassName,
-  ICharacter,
-  ICharacterActionDecision,
-} from "../off-limits/ICharacter";
+import { CharacterClassName, ICharacter, ICharacterActionDecision } from "../off-limits/ICharacter";
 import { IWeapon, IItem, isMeleeWeapon } from "../off-limits/IWeapons";
 
 export class CharacterClass implements ICharacter {
-  private static asciiMap: Map<CharacterClassName, string> = new Map([
-    ["Warrior", "😡"],
-    ["Cleric", "😇"],
-    ["Thief", "😎"],
-    ["Mage", "🧙‍♂️"],
-  ]);
   item?: IItem | undefined;
   constructor(
     public name: string,
+    public face: string,
     public health: number,
     public position: number,
     public weapons: IWeapon[],
@@ -22,14 +13,10 @@ export class CharacterClass implements ICharacter {
     // ICharacter.item, and instead we use a list of class-specific
     // items instead, just like we do with weapons.
     public items: IItem[]
-  ) {
-    if (!CharacterClass.asciiMap.has(name as CharacterClassName)) {
-      throw new Error(`Invalid CharacterClassName '${name}'`);
-    }
-  }
+  ) {}
   // ICharacter
   classname = (): CharacterClassName => this.name as CharacterClassName;
-  getASCIIStatus = (): string => CharacterClass.asciiMap.get(this.classname())!;
+  getASCIIStatus = (): string => this.face;
   move(): void {
     throw new Error("Method not implemented.");
   }
