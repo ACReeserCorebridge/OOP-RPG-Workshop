@@ -22,6 +22,9 @@ export interface AppState {
   view: 'menu' | 'loot' | 'fight';
 }
 
+// xTODO: Create an enum for the currentCharacter than number type
+
+
 function getNewGameState(): AppState{
   return {
     characters: [

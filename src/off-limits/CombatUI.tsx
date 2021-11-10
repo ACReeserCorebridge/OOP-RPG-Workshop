@@ -65,6 +65,7 @@ export const CharacterRow: React.FC<{
             {cols.map((c, i) => {
                 return (
                     <td className="col" key={i}>
+                        {i}
                         {c.c ? (
                             <CharacterCombatUI
                                 character={props.character}
