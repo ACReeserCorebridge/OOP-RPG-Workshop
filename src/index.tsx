@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
-import { Cleric, Mage, RandomCharacter, Thief, Warrior } from './workshop/Characters';
+import { Cleric, Mage, Thief, Warrior } from './workshop/Characters';
 import {  GameTick, CombatPhase } from './off-limits/Game';
 import './style.css';
 import { CombatUI } from './off-limits/CombatUI';
